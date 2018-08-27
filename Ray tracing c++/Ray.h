@@ -1,4 +1,6 @@
-#pragma once
+#ifndef RAY_H
+#define RAY_H
+
 #include "VECTOR3D.h"
 
 struct Ray
@@ -12,3 +14,5 @@ struct Ray
 		this->dir = dir;
 	}
 };
+
+#endif

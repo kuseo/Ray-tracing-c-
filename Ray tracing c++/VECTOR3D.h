@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cmath>
+#ifndef VECTOR3D_H
+#define VECTOR3D_H
 
 class VECTOR3D
 {
@@ -31,3 +33,5 @@ public:
 	float y;
 	float z;
 };
+
+#endif
