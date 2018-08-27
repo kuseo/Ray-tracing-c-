@@ -150,7 +150,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Ray tracing c++.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="VECTOR3D.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gl_helper.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Ray.h" />
+    <ClInclude Include="VECTOR3D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
