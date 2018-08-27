@@ -88,7 +88,9 @@ public:
 	{}
 
 	virtual VECTOR3D get_normal(VECTOR3D point)
-	{}
+	{
+		return point - cen;
+	}
 
 };
 
