@@ -6,6 +6,10 @@
 class Sphere : public Object
 {
 public:
+
+	/*
+	member variables
+	*/
 	VECTOR3D cen;
 	float rad;
 
@@ -25,6 +29,17 @@ public:
 	*/
 	~Sphere() {}
 
+	/*
+	member function
+	*/
+	virtual bool hit(Ray r, float *t)
+	{}
+
+	virtual VECTOR3D getColor(VECTOR3D point, VECTOR3D light, VECTOR3D ray)
+	{}
+
+	virtual VECTOR3D get_normal(VECTOR3D point)
+	{}
 
 };
 
