@@ -158,6 +158,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="VECTOR3D.h" />
+    <ClInclude Include="Sphere.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
