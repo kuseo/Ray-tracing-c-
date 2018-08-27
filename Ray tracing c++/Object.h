@@ -1,4 +1,6 @@
-#pragma once
+#ifndef OBJECT_H
+#define OBJECT_H
+
 #include "Ray.h"
 
 class Object
@@ -18,3 +20,4 @@ public:
 	virtual VECTOR3D get_normal(VECTOR3D point) = 0 {}
 };
 
+#endif
