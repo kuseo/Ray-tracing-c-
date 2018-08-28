@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef __GL_HELPER_H__
 #define __GL_HELPER_H__
 
