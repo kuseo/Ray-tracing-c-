@@ -1,8 +1,7 @@
-#pragma once
-
-#include <cmath>
 #ifndef VECTOR3D_H
 #define VECTOR3D_H
+
+#include <cmath>
 
 class VECTOR3D
 {
