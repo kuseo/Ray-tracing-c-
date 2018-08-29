@@ -9,6 +9,10 @@ Ray tracing
 
 using namespace std;
 
+GLdouble mvMatrix[16];
+GLdouble projMatrix[16];
+GLint viewport[4];
+
 vector<Object*> objects;
 VECTOR3D light = VECTOR3D(0.0, 0.0, 0.0);		//position of the light
 
@@ -92,8 +96,7 @@ VECTOR3D raytrace(Ray ray, int depth)
 
 void display(void)
 {
-	glClear(GL_COLOR_BUFFER_BIT);
-
+	
 	glutSwapBuffers();
 }
 
