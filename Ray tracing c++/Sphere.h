@@ -16,7 +16,7 @@ public:
 	VECTOR3D k_ambient;
 	VECTOR3D k_diffuse;
 	VECTOR3D k_specular;
-	float k_shineness;
+	float k_shineness = 0.6;
 
 	/*
 	constructor
