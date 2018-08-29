@@ -100,7 +100,33 @@ void display(void)
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	/*
+	Ray casting
+	*/
+	glGetDoublev(GL_MODELVIEW_MATRIX, mvMatrix);
+	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
+	glGetIntegerv(GL_VIEWPORT, viewport);
 
+	glBegin(GL_POINTS);
+	for (int i = 0; i < glutGet(GLUT_WINDOW_WIDTH); i++)
+		for (int j = 0; j < glutGet(GLUT_WINDOW_HEIGHT); j++)
+		{
+			double nearX, nearY, nearZ;
+
+			gluUnProject(i, j, 0, mvMatrix, projMatrix, viewport, &nearX, &nearY, &nearZ);
+			
+			VECTOR3D near((float)nearX, (float)nearY, (float)nearZ);
+
+			Ray ray(eye, near - eye);
+
+			VECTOR3D color = raytrace(ray, 0);
+
+			glColor3f(color.x, color.y, color.z);
+
+			glVertex3f(near.x, near.y, near.z);
+		}
+
+	glutPostRedisplay();
 	glutSwapBuffers();
 }
 
