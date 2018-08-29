@@ -13,6 +13,11 @@ struct Ray
 		this->origin = origin;
 		this->dir = dir;
 	}
+
+	VECTOR3D position(float t)
+	{
+		return origin + dir * t;
+	}
 };
 
 #endif
