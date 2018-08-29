@@ -97,13 +97,27 @@ VECTOR3D raytrace(Ray ray, int depth)
 
 void display(void)
 {
-	
+	glLoadIdentity();
+	glClear(GL_COLOR_BUFFER_BIT);
+
+
 	glutSwapBuffers();
 }
 
 void reshape(int width, int height)
 {
+	glViewport(0, 0, width, height);
 
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	if (height == 0)
+		gluPerspective(80, (float)width, 1.0, 5000.0);
+	else
+		gluPerspective(80, (float)width / (float)height, 1.0, 5000.0);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void key(unsigned char key, int x, int y)
