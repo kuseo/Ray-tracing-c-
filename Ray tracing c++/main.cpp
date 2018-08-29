@@ -14,6 +14,7 @@ GLdouble projMatrix[16];
 GLint viewport[4];
 
 vector<Object*> objects;
+VECTOR3D eye = VECTOR3D(0.0, 5.0, 5.0);			//position of the camera, which is the origin of the ray
 VECTOR3D light = VECTOR3D(0.0, 0.0, 0.0);		//position of the light
 
 VECTOR3D raytrace(Ray ray, int depth)
@@ -100,6 +101,11 @@ void display(void)
 	glutSwapBuffers();
 }
 
+void reshape(int width, int height)
+{
+
+}
+
 void key(unsigned char key, int x, int y)
 {
 	/*
@@ -121,6 +127,7 @@ int main(int argc, char **argv)
 
 
 	glutDisplayFunc(display);
+	glutReshapeFunc(reshape);
 	glutKeyboardFunc(key);
 	glutMainLoop();
 	return 0;             /* ANSI C requires main to return int. */
