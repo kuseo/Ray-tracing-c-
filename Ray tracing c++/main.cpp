@@ -1,6 +1,8 @@
-/*
-Ray tracing
-*/
+/*************************
+*	Ray Tracing			 *
+*	08.29.18			 *
+*************************/
+
 #include <stdio.h>
 #include <vector>
 #include "Sphere.h"
@@ -14,8 +16,9 @@ GLdouble projMatrix[16];
 GLint viewport[4];
 
 vector<Object*> objects;
+vector<VECTOR3D> center;
 VECTOR3D eye = VECTOR3D(0.0, 5.0, 5.0);			//position of the camera, which is the origin of the ray
-VECTOR3D light = VECTOR3D(0.0, 0.0, 0.0);		//position of the light
+VECTOR3D light = VECTOR3D(0.0, 10.0, 0.0);		//position of the light
 
 VECTOR3D raytrace(Ray ray, int depth)
 {
@@ -165,6 +168,18 @@ int main(int argc, char **argv)
 	glutInitWindowSize(DIM, DIM);
 	glutCreateWindow("Ray Tracing");
 
+	objects.resize(3);
+	center.resize(3);
+	
+	center[0] = VECTOR3D(2.0, 2.0, 2.0);
+	center[1] = VECTOR3D(-2.0, 2.0, 2.0);
+	center[2] = VECTOR3D(0.0, 2.0, -2.0);
+
+
+	for (int i = 0; i < objects.size(); i++)
+	{
+		objects[i] = new Sphere(center[i], 2.0);
+	}
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
