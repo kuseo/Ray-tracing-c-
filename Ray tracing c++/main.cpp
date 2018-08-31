@@ -199,17 +199,22 @@ int main(int argc, char **argv)
 
 	for (int i = 0; i < objects.size(); i++)
 	{
+		printf("object #%d\n", i);
 		objects[i] = new Sphere(center[i], 2.0);
+
+		printf("ambient : ");
 		randomVector(&objects[i]->k_ambient);
 		printVector(objects[i]->k_ambient);
 
+		printf("diffuse : ");
 		randomVector(&objects[i]->k_diffuse);
 		printVector(objects[i]->k_diffuse);
 
+		printf("specular : ");
 		randomVector(&objects[i]->k_specular);
 		printVector(objects[i]->k_specular);
 
-		printf("\n");
+		printf("\n\n");
 	}
 	
 
