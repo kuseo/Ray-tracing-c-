@@ -9,6 +9,7 @@
 #include "gl_helper.h"
 #define DIM 800
 
+
 using namespace std;
 
 vector<Object*> objects;
@@ -96,7 +97,7 @@ VECTOR3D raytrace(Ray ray, int depth)
 
 void display(void)
 {
-	gluLookAt(eye.x, eye.y, eye.z, 0.0, 0.0, 0.0, 0.0, 1.0, -1.0);
+	gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
 
 	/*
 	get matrices
@@ -109,14 +110,12 @@ void display(void)
 	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
 	glGetIntegerv(GL_VIEWPORT, viewport);
 
-
 	/*
 	draw
 	*/
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
-
-
+	
 	glBegin(GL_POINTS);
 	for (int i = 0; i < glutGet(GLUT_WINDOW_WIDTH); i++)
 		for (int j = 0; j < glutGet(GLUT_WINDOW_HEIGHT); j++)
@@ -129,12 +128,17 @@ void display(void)
 			if (gluUnProject(i, j, 0, modelMatrix, projMatrix, viewport, &nearX, &nearY, &nearZ) == GLU_FALSE)
 			{
 				printf("gluUnProject fail\n");
+				printf("%d, %d\n", i, j);
 				exit(0);
 			}
 			
+			/*
+			create ray
+			*/
 			VECTOR3D near((float)nearX, (float)nearY, (float)nearZ);
 			VECTOR3D v = near - eye;
 			v.Normalize();
+
 			Ray ray(eye, v);
 
 			/*
@@ -150,21 +154,23 @@ void display(void)
 	glutPostRedisplay();
 }
 
-void reshape(int width, int height)
+void reshape(int w, int h)
 {
-	if (height == 0)
-		height = 1;
-	float ratio = 1.0 * width / height;
+	glViewport(0, 0, w, h);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glViewport(0, 0, width, height);
 
-	gluPerspective(80, ratio, 0, 10000);
+	if (h == 0)
+		gluPerspective(80, (float)w, 1.0, 5000.0);
+	else
+		gluPerspective(80, (float)w / (float)h, 1.0, 5000.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
 }
+
 
 void key(unsigned char key, int x, int y)
 {
@@ -184,15 +190,13 @@ void key(unsigned char key, int x, int y)
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(DIM, DIM);
 	glutCreateWindow("Ray Tracing");
-	glEnable(GL_DEPTH_TEST);
 
 	objects.resize(3);
 	center.resize(3);
-	
 	center[0] = VECTOR3D(2.0, 2.0, 2.0);
 	center[1] = VECTOR3D(-2.0, 2.0, 2.0);
 	center[2] = VECTOR3D(0.0, 2.0, -2.0);
@@ -203,8 +207,8 @@ int main(int argc, char **argv)
 		objects[i] = new Sphere(center[i], 2.0);
 	}
 
-	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
+	glutDisplayFunc(display);
 	glutKeyboardFunc(key);
 	glutMainLoop();
 	return 0;             /* ANSI C requires main to return int. */
