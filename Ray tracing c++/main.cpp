@@ -8,8 +8,7 @@
 #include <vector>
 #include "my_utility.h"
 #include "Sphere.h"
-#include "gl_helper.h"
-#define DIM 800
+#include "Init.h"
 
 
 using namespace std;
@@ -25,7 +24,7 @@ GLint viewport[4];
 
 vector<Object*> objects;
 vector<VECTOR3D> center;
-VECTOR3D eye = VECTOR3D(0.0, -0.2, 0.0);			//position of the camera, which is the origin of the ray
+VECTOR3D eye = VECTOR3D(0.0, 0.0, 0.0);			//position of the camera, which is the origin of the ray
 VECTOR3D light = VECTOR3D(0.0, 1.0, 0.0);		//position of the light
 
 VECTOR3D raytrace(Ray ray, int depth)
@@ -116,14 +115,14 @@ void display(void)
 	
 	glBegin(GL_POINTS);
 	for (int i = 0; i < glutGet(GLUT_WINDOW_WIDTH); i++)
-		for (int j = 0; j < glutGet(GLUT_WINDOW_HEIGHT); j++)
+		for (int j = 1; j <= glutGet(GLUT_WINDOW_HEIGHT); j++)
 		{
 			/*
 			ray casting
 			*/
 			double nearX, nearY, nearZ;
 
-			if (gluUnProject(i, j, 0, modelMatrix, projMatrix, viewport, &nearX, &nearY, &nearZ) == GLU_FALSE)
+			if (gluUnProject(i, glutGet(GLUT_WINDOW_HEIGHT) - j, 0, modelMatrix, projMatrix, viewport, &nearX, &nearY, &nearZ) == GLU_FALSE)
 			{
 				printf("gluUnProject fail\n");
 				printf("%d, %d\n", i, j);
@@ -149,6 +148,7 @@ void display(void)
 		}
 
 	glutSwapBuffers();
+	glutPostRedisplay();
 }
 
 void reshape(int w, int h)
@@ -182,23 +182,40 @@ void key(unsigned char key, int x, int y)
 	}
 }
 
+void arrowkey(int key, int x, int y)
+{
+	switch (key)
+	{
+	case GLUT_KEY_UP:
+		eye.y += 0.05;
+		break;
+	case GLUT_KEY_DOWN:
+		eye.y -= 0.05;
+		break;
+	case GLUT_KEY_LEFT:
+		eye.x -= 0.05;
+		break;
+	case GLUT_KEY_RIGHT:
+		eye.x += 0.05;
+		break;
+	}
+	printVector(eye);
+	glutPostRedisplay();
+}
+
 int main(int argc, char **argv)
 {
 	printf("depth : ");
 	scanf("%d", &depth);
 	srand(time(NULL));
 
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
-	glutInitWindowPosition(0, 0);
-	glutInitWindowSize(DIM, DIM);
-	glutCreateWindow("Ray Tracing");
+	Initialize(argc, argv);
 
 	objects.resize(3);
 	center.resize(3);
-	center[0] = VECTOR3D(2.0, 2.0, -8.0);
-	center[1] = VECTOR3D(-2.0, 2.0, -8.0);
-	center[2] = VECTOR3D(0.0, 2.0, -10.0);
+	center[0] = VECTOR3D(2.0, 0.0, -8.0);
+	center[1] = VECTOR3D(-2.0, 0.0, -8.0);
+	center[2] = VECTOR3D(0.0, 0.0, -10.0);
 
 	for (int i = 0; i < objects.size(); i++)
 	{
@@ -224,6 +241,7 @@ int main(int argc, char **argv)
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
 	glutKeyboardFunc(key);
+	glutSpecialFunc(arrowkey);
 	glutMainLoop();
 	return 0;             /* ANSI C requires main to return int. */
 }
