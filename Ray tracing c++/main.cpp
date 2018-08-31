@@ -25,7 +25,7 @@ GLint viewport[4];
 vector<Object*> objects;
 vector<VECTOR3D> center;
 VECTOR3D eye = VECTOR3D(0.0, 0.0, 0.0);			//position of the camera, which is the origin of the ray
-VECTOR3D light = VECTOR3D(0.0, 1.0, 0.0);		//position of the light
+VECTOR3D light = VECTOR3D(0.0, 5.0, -9.0);		//position of the light
 
 VECTOR3D raytrace(Ray ray, int depth)
 {
@@ -99,10 +99,10 @@ VECTOR3D raytrace(Ray ray, int depth)
 
 	if (depth > 0)
 		return o->k_ambient + (o->getColor(point, light, ray.origin)) * shadow
-		+ raytrace(Ray(point, Reflection), depth - 1) * 0.3;
-		//+ raytrace(Ray(point, Refraction), depth - 1) * 0.3;
+		+ raytrace(Ray(point, Reflection), depth - 1) * 0.3
+		+ raytrace(Ray(point, ray.dir), depth - 1) * 0.3;
 	else
-		return o->k_ambient + o->getColor(point, light, ray.origin) * shadow;
+		return o->k_ambient +o->getColor(point, light, ray.origin) * shadow;
 }
 
 void display(void)
@@ -111,8 +111,11 @@ void display(void)
 	draw
 	*/
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
 	
+	glGetDoublev(GL_MODELVIEW_MATRIX, modelMatrix);
+	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
+	glGetIntegerv(GL_VIEWPORT, viewport);
+
 	glBegin(GL_POINTS);
 	for (int i = 0; i < glutGet(GLUT_WINDOW_WIDTH); i++)
 		for (int j = 1; j <= glutGet(GLUT_WINDOW_HEIGHT); j++)
@@ -122,7 +125,7 @@ void display(void)
 			*/
 			double nearX, nearY, nearZ;
 
-			if (gluUnProject(i, glutGet(GLUT_WINDOW_HEIGHT) - j, 0, modelMatrix, projMatrix, viewport, &nearX, &nearY, &nearZ) == GLU_FALSE)
+			if (gluUnProject(i, glutGet(GLUT_WINDOW_HEIGHT)- j, 0, modelMatrix, projMatrix, viewport, &nearX, &nearY, &nearZ) == GLU_FALSE)
 			{
 				printf("gluUnProject fail\n");
 				printf("%d, %d\n", i, j);
@@ -148,26 +151,27 @@ void display(void)
 		}
 
 	glutSwapBuffers();
-	glutPostRedisplay();
+	//glutPostRedisplay();
 }
 
 void reshape(int w, int h)
 {
 	glViewport(0, 0, w, h);
 
+	GLdouble wfactor = (GLdouble)w / (GLdouble)DIM;
+	GLdouble hfactor = (GLdouble)h / (GLdouble)DIM;
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	if (h == 0)
-		gluPerspective(80, (float)w, 1.0, 5000.0);
+	glOrtho(-1.0 * wfactor, 1.0 * wfactor, -1.0 * hfactor, 1.0 * hfactor, 1.0, -1.0);
+	/*
+		if (h == 0)
+		gluPerspective(100, (float)w, 1.0, 5000.0);
 	else
-		gluPerspective(80, (float)w / (float)h, 1.0, 5000.0);
+		gluPerspective(100, (float)w / (float)h, 1.0, 5000.0);
+	*/
 
-	glMatrixMode(GL_MODELVIEW);
 
-	glGetDoublev(GL_MODELVIEW_MATRIX, modelMatrix);
-	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
-	glGetIntegerv(GL_VIEWPORT, viewport);
 }
 
 void key(unsigned char key, int x, int y)
@@ -200,22 +204,21 @@ void arrowkey(int key, int x, int y)
 		break;
 	}
 	printVector(eye);
-	glutPostRedisplay();
 }
 
 int main(int argc, char **argv)
 {
 	printf("depth : ");
 	scanf("%d", &depth);
-	srand(time(NULL));
+	srand(5);
 
 	Initialize(argc, argv);
 
-	objects.resize(3);
+	objects.resize(4);
 	center.resize(3);
 	center[0] = VECTOR3D(2.0, 0.0, -8.0);
 	center[1] = VECTOR3D(-2.0, 0.0, -8.0);
-	center[2] = VECTOR3D(0.0, 0.0, -10.0);
+	center[2] = VECTOR3D(0.0, 0.0, -11.0);
 
 	for (int i = 0; i < objects.size(); i++)
 	{
@@ -236,7 +239,16 @@ int main(int argc, char **argv)
 
 		printf("\n\n");
 	}
-	
+
+	/*
+	light
+	*/
+	objects[3] = new Sphere(light, 0.3);
+	VECTOR3D l = VECTOR3D(1.0, 1.0, 1.0);
+	objects[3]->k_ambient = l;
+	objects[3]->k_diffuse = l;
+	objects[3]->k_specular = l;
+
 
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
