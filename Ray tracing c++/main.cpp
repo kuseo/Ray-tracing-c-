@@ -201,8 +201,15 @@ int main(int argc, char **argv)
 	{
 		objects[i] = new Sphere(center[i], 2.0);
 		randomVector(&objects[i]->k_ambient);
+		printVector(objects[i]->k_ambient);
+
 		randomVector(&objects[i]->k_diffuse);
+		printVector(objects[i]->k_diffuse);
+
 		randomVector(&objects[i]->k_specular);
+		printVector(objects[i]->k_specular);
+
+		printf("\n");
 	}
 	
 
