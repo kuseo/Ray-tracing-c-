@@ -200,6 +200,9 @@ int main(int argc, char **argv)
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i] = new Sphere(center[i], 2.0);
+		randomVector(&objects[i]->k_ambient);
+		randomVector(&objects[i]->k_diffuse);
+		randomVector(&objects[i]->k_specular);
 	}
 	
 
