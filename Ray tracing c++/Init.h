@@ -11,6 +11,8 @@ void Initialize(int argc, char **argv)
 	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(DIM, DIM);
 	glutCreateWindow("Ray Tracing");
+
+	glEnable(GL_DEPTH_TEST);
 }
 
 #endif
