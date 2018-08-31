@@ -23,6 +23,12 @@ void randomVector(VECTOR3D *v)
 	return;
 }
 
+void printVector(VECTOR3D v)
+{
+	for (int i = 0; i < 3; i++)
+		printf("%lf %lf %lf\n", v.x, v.y, v.z);
+}
+
 void calculateUp(VECTOR3D input, VECTOR3D *output)
 {
 
