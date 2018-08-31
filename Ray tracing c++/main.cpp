@@ -198,14 +198,11 @@ int main(int argc, char **argv)
 	center[1] = VECTOR3D(-2.0, 2.0, -8.0);
 	center[2] = VECTOR3D(0.0, 2.0, -10.0);
 
-
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i] = new Sphere(center[i], 2.0);
 	}
-	objects[0]->k_ambient = VECTOR3D();
-	objects[0]->k_ambient = VECTOR3D();
-	objects[0]->k_ambient = VECTOR3D();
+	
 
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
