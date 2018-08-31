@@ -11,10 +11,6 @@
 
 using namespace std;
 
-GLdouble mvMatrix[16];
-GLdouble projMatrix[16];
-GLint viewport[4];
-
 vector<Object*> objects;
 vector<VECTOR3D> center;
 VECTOR3D eye = VECTOR3D(0.0, 5.0, 5.0);			//position of the camera, which is the origin of the ray
@@ -100,50 +96,71 @@ VECTOR3D raytrace(Ray ray, int depth)
 
 void display(void)
 {
-	glLoadIdentity();
-	glClear(GL_COLOR_BUFFER_BIT);
+	gluLookAt(eye.x, eye.y, eye.z, 0.0, 0.0, 0.0, 0.0, 1.0, -1.0);
 
 	/*
-	Ray casting
+	get matrices
 	*/
-	glGetDoublev(GL_MODELVIEW_MATRIX, mvMatrix);
+	GLdouble modelMatrix[16];
+	GLdouble projMatrix[16];
+	GLint viewport[4];
+
+	glGetDoublev(GL_MODELVIEW_MATRIX, modelMatrix);
 	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
 	glGetIntegerv(GL_VIEWPORT, viewport);
+
+
+	/*
+	draw
+	*/
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+
 
 	glBegin(GL_POINTS);
 	for (int i = 0; i < glutGet(GLUT_WINDOW_WIDTH); i++)
 		for (int j = 0; j < glutGet(GLUT_WINDOW_HEIGHT); j++)
 		{
+			/*
+			ray casting
+			*/
 			double nearX, nearY, nearZ;
 
-			gluUnProject(i, j, 0, mvMatrix, projMatrix, viewport, &nearX, &nearY, &nearZ);
+			if (gluUnProject(i, j, 0, modelMatrix, projMatrix, viewport, &nearX, &nearY, &nearZ) == GLU_FALSE)
+			{
+				printf("gluUnProject fail\n");
+				exit(0);
+			}
 			
 			VECTOR3D near((float)nearX, (float)nearY, (float)nearZ);
+			VECTOR3D v = near - eye;
+			v.Normalize();
+			Ray ray(eye, v);
 
-			Ray ray(eye, near - eye);
-
+			/*
+			finally, we call the raytrace function
+			*/
 			VECTOR3D color = raytrace(ray, 0);
 
 			glColor3f(color.x, color.y, color.z);
-
 			glVertex3f(near.x, near.y, near.z);
 		}
 
-	glutPostRedisplay();
 	glutSwapBuffers();
+	glutPostRedisplay();
 }
 
 void reshape(int width, int height)
 {
-	glViewport(0, 0, width, height);
+	if (height == 0)
+		height = 1;
+	float ratio = 1.0 * width / height;
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
+	glViewport(0, 0, width, height);
 
-	if (height == 0)
-		gluPerspective(80, (float)width, 1.0, 5000.0);
-	else
-		gluPerspective(80, (float)width / (float)height, 1.0, 5000.0);
+	gluPerspective(80, ratio, 0, 10000);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -158,15 +175,20 @@ void key(unsigned char key, int x, int y)
 	{
 	case '27':
 		exit(0);
+	case ' ':
+		printf("press space bar\n");
+		break;
 	}
 }
 
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
+	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(DIM, DIM);
 	glutCreateWindow("Ray Tracing");
+	glEnable(GL_DEPTH_TEST);
 
 	objects.resize(3);
 	center.resize(3);
