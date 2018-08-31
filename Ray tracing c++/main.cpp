@@ -4,6 +4,8 @@
 *************************/
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include <vector>
 #include "Sphere.h"
 #include "gl_helper.h"
@@ -12,10 +14,17 @@
 
 using namespace std;
 
+/*
+get matrices
+*/
+GLdouble modelMatrix[16];
+GLdouble projMatrix[16];
+GLint viewport[4];
+
 vector<Object*> objects;
 vector<VECTOR3D> center;
-VECTOR3D eye = VECTOR3D(0.0, 5.0, 5.0);			//position of the camera, which is the origin of the ray
-VECTOR3D light = VECTOR3D(0.0, 10.0, 0.0);		//position of the light
+VECTOR3D eye = VECTOR3D(0.0, 0.0, 0.0);			//position of the camera, which is the origin of the ray
+VECTOR3D light = VECTOR3D(0.0, 1.0, 0.0);		//position of the light
 
 VECTOR3D raytrace(Ray ray, int depth)
 {
@@ -97,19 +106,6 @@ VECTOR3D raytrace(Ray ray, int depth)
 
 void display(void)
 {
-	gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
-
-	/*
-	get matrices
-	*/
-	GLdouble modelMatrix[16];
-	GLdouble projMatrix[16];
-	GLint viewport[4];
-
-	glGetDoublev(GL_MODELVIEW_MATRIX, modelMatrix);
-	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
-	glGetIntegerv(GL_VIEWPORT, viewport);
-
 	/*
 	draw
 	*/
@@ -151,7 +147,6 @@ void display(void)
 		}
 
 	glutSwapBuffers();
-	glutPostRedisplay();
 }
 
 void reshape(int w, int h)
@@ -167,8 +162,10 @@ void reshape(int w, int h)
 		gluPerspective(80, (float)w / (float)h, 1.0, 5000.0);
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 
+	glGetDoublev(GL_MODELVIEW_MATRIX, modelMatrix);
+	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
+	glGetIntegerv(GL_VIEWPORT, viewport);
 }
 
 
@@ -197,15 +194,18 @@ int main(int argc, char **argv)
 
 	objects.resize(3);
 	center.resize(3);
-	center[0] = VECTOR3D(2.0, 2.0, 2.0);
-	center[1] = VECTOR3D(-2.0, 2.0, 2.0);
-	center[2] = VECTOR3D(0.0, 2.0, -2.0);
+	center[0] = VECTOR3D(2.0, 2.0, -8.0);
+	center[1] = VECTOR3D(-2.0, 2.0, -8.0);
+	center[2] = VECTOR3D(0.0, 2.0, -10.0);
 
 
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i] = new Sphere(center[i], 2.0);
 	}
+	objects[0]->k_ambient = VECTOR3D();
+	objects[0]->k_ambient = VECTOR3D();
+	objects[0]->k_ambient = VECTOR3D();
 
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
