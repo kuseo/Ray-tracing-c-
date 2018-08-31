@@ -2,6 +2,7 @@
 *	Ray Tracing			 *
 *	08.29.18			 *
 *************************/
+#pragma warning(disable:4996)
 
 #include <stdio.h>
 #include <vector>
@@ -13,6 +14,8 @@
 
 using namespace std;
 
+int depth = 0;
+
 /*
 get matrices
 */
@@ -22,7 +25,7 @@ GLint viewport[4];
 
 vector<Object*> objects;
 vector<VECTOR3D> center;
-VECTOR3D eye = VECTOR3D(0.0, 0.0, 0.0);			//position of the camera, which is the origin of the ray
+VECTOR3D eye = VECTOR3D(0.0, -0.2, 0.0);			//position of the camera, which is the origin of the ray
 VECTOR3D light = VECTOR3D(0.0, 1.0, 0.0);		//position of the light
 
 VECTOR3D raytrace(Ray ray, int depth)
@@ -139,7 +142,7 @@ void display(void)
 			/*
 			finally, we call the raytrace function
 			*/
-			VECTOR3D color = raytrace(ray, 0);
+			VECTOR3D color = raytrace(ray, depth);
 
 			glColor3f(color.x, color.y, color.z);
 			glVertex3f(near.x, near.y, near.z);
@@ -167,7 +170,6 @@ void reshape(int w, int h)
 	glGetIntegerv(GL_VIEWPORT, viewport);
 }
 
-
 void key(unsigned char key, int x, int y)
 {
 	/*
@@ -177,14 +179,15 @@ void key(unsigned char key, int x, int y)
 	{
 	case '27':
 		exit(0);
-	case ' ':
-		printf("press space bar\n");
-		break;
 	}
 }
 
 int main(int argc, char **argv)
 {
+	printf("depth : ");
+	scanf("%d", &depth);
+	srand(time(NULL));
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutInitWindowPosition(0, 0);
