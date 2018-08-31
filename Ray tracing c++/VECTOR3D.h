@@ -1,7 +1,7 @@
 #ifndef VECTOR3D_H
 #define VECTOR3D_H
 
-#include <cmath>
+#include <math.h>
 
 class VECTOR3D
 {
