@@ -25,7 +25,7 @@ void randomVector(VECTOR3D *v)
 
 void printVector(VECTOR3D v)
 {
-	printf("%lf %lf %lf\n", v.x, v.y, v.z);
+	printf("(%lf, %lf, %lf)\n", v.x, v.y, v.z);
 }
 
 void calculateUp(VECTOR3D input, VECTOR3D *output)
