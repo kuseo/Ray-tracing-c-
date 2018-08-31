@@ -13,10 +13,10 @@ void randomVector(VECTOR3D *v)
 	output.x = (rand() % 100) / 100.0;
 
 	srand(time(NULL));
-	output.x = (rand() % 100) / 100.0;
+	output.y = (rand() % 100) / 100.0;
 
 	srand(time(NULL));
-	output.x = (rand() % 100) / 100.0;
+	output.z = (rand() % 100) / 100.0;
 
 	*v = output;
 
@@ -25,8 +25,7 @@ void randomVector(VECTOR3D *v)
 
 void printVector(VECTOR3D v)
 {
-	for (int i = 0; i < 3; i++)
-		printf("%lf %lf %lf\n", v.x, v.y, v.z);
+	printf("%lf %lf %lf\n", v.x, v.y, v.z);
 }
 
 void calculateUp(VECTOR3D input, VECTOR3D *output)
