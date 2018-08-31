@@ -4,9 +4,8 @@
 *************************/
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include <vector>
+#include "my_utility.h"
 #include "Sphere.h"
 #include "gl_helper.h"
 #define DIM 800
