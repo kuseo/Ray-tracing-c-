@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gl_helper.h" />
+    <ClInclude Include="my_utility.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="VECTOR3D.h" />
