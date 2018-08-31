@@ -241,7 +241,7 @@ int main(int argc, char **argv)
 	}
 
 	/*
-	light
+	light ball
 	*/
 	objects[3] = new Sphere(light, 0.3);
 	VECTOR3D l = VECTOR3D(1.0, 1.0, 1.0);
