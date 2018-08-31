@@ -164,14 +164,6 @@ void reshape(int w, int h)
 	glLoadIdentity();
 
 	glOrtho(-1.0 * wfactor, 1.0 * wfactor, -1.0 * hfactor, 1.0 * hfactor, 1.0, -1.0);
-	/*
-		if (h == 0)
-		gluPerspective(100, (float)w, 1.0, 5000.0);
-	else
-		gluPerspective(100, (float)w / (float)h, 1.0, 5000.0);
-	*/
-
-
 }
 
 void key(unsigned char key, int x, int y)
