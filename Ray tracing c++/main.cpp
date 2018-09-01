@@ -208,7 +208,7 @@ int main(int argc, char **argv)
 
 	Initialize(argc, argv);
 
-	objects.resize(4);
+	objects.resize(3);
 	center.resize(3);
 	center[0] = VECTOR3D(2.0, 0.0, -8.0);
 	center[1] = VECTOR3D(-2.0, 0.0, -8.0);
@@ -220,26 +220,20 @@ int main(int argc, char **argv)
 		objects[i] = new Sphere(center[i], 2.0);
 
 		printf("ambient : ");
-		randomVector(&objects[i]->k_ambient);
-		printVector(objects[i]->k_ambient);
+		objects[i]->setAmbient(randomVector());
+		printVector(objects[i]->getAmbient());
 
 		printf("diffuse : ");
-		randomVector(&objects[i]->k_diffuse);
-		printVector(objects[i]->k_diffuse);
+		objects[i]->setDiffuse(randomVector());
+		printVector(objects[i]->getDiffuse());
 
 		printf("specular : ");
-		randomVector(&objects[i]->k_specular);
-		printVector(objects[i]->k_specular);
+		objects[i]->setSpecular(randomVector());
+		printVector(objects[i]->getSpecular());
 
 		printf("\n\n");
 	}
 
-	/*
-	light ball
-	*/
-	objects[3] = new Sphere(light, 0.3f);
-	VECTOR3D l = VECTOR3D(1.0f, 1.0f, 1.0f);
-	objects[3]->setAmbient(l);
 
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
