@@ -162,6 +162,7 @@ void reshape(int w, int h)
 
 	GLdouble wfactor = (GLdouble)w / (GLdouble)DIM;
 	GLdouble hfactor = (GLdouble)h / (GLdouble)DIM;
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
