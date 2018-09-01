@@ -25,7 +25,7 @@ GLint viewport[4];
 vector<Object*> objects;
 vector<VECTOR3D> center;
 VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//position of the camera, which is the origin of the ray
-VECTOR3D light = VECTOR3D(0.0f, 5.0f, -9.0f);		//position of the light
+VECTOR3D light = VECTOR3D(0.0f, 10.0f, -9.0f);		//position of the light
 
 VECTOR3D raytrace(Ray ray, int depth)
 {
@@ -204,15 +204,15 @@ int main(int argc, char **argv)
 {
 	printf("depth : ");
 	scanf("%d", &depth);
-	srand(5);
+	srand(time(0));
 
 	Initialize(argc, argv);
 
 	objects.resize(3);
 	center.resize(3);
-	center[0] = VECTOR3D(2.0, 0.0, -8.0);
-	center[1] = VECTOR3D(-2.0, 0.0, -8.0);
-	center[2] = VECTOR3D(0.0, 0.0, -11.0);
+	center[0] = VECTOR3D(2.0, -2.0, -8.0);
+	center[1] = VECTOR3D(-2.0, -2.0, -8.0);
+	center[2] = VECTOR3D(0.0, -2.0, -11.0);
 
 	for (int i = 0; i < objects.size(); i++)
 	{
