@@ -30,6 +30,13 @@ public:
 	virtual bool hit(Ray r, float *t) = 0 {}
 	virtual VECTOR3D getColor(VECTOR3D point, VECTOR3D light, VECTOR3D ray) = 0 {}
 	virtual VECTOR3D get_normal(VECTOR3D point) = 0 {}
+	
+	/*
+	setter
+	*/
+	virtual void setAmbient() = 0 {};
+	virtual void setDiffuse() = 0 {};
+	virtual void setSpecular() = 0 {};
 };
 
 #endif
