@@ -9,13 +9,11 @@ void randomVector(VECTOR3D *v)
 {
 	VECTOR3D output;
 
-	output.x = (rand() % 60) / 100.0f;
+	v->x = (rand() % 60) / 100.0f;
 
-	output.y = (rand() % 60) / 100.0f;
+	v->y = (rand() % 60) / 100.0f;
 
-	output.z = (rand() % 60) / 100.0f;
-
-	*v = output;
+	v->z = (rand() % 60) / 100.0f;
 
 	return;
 }

@@ -34,9 +34,9 @@ public:
 	/*
 	setter
 	*/
-	virtual void setAmbient() = 0 {};
-	virtual void setDiffuse() = 0 {};
-	virtual void setSpecular() = 0 {};
+	virtual void setAmbient(VECTOR3D v) = 0 {};
+	virtual void setDiffuse(VECTOR3D v) = 0 {};
+	virtual void setSpecular(VECTOR3D v) = 0 {};
 };
 
 #endif
