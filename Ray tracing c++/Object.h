@@ -1,5 +1,5 @@
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef __OBJECT_H__
+#define __OBJECT_H__
 
 #include "Ray.h"
 
@@ -46,4 +46,4 @@ public:
 	virtual VECTOR3D getSpecular() = 0 {};
 };
 
-#endif
+#endif //__OBJECT_H__

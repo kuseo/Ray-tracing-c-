@@ -1,4 +1,4 @@
-#ifndef PLANE_H
-#define PLANE_H
+#ifndef __PLANE_H__
+#define __PLANE_H__
 
-#endif
+#endif //__PLANE_H__

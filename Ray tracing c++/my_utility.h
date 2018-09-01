@@ -1,5 +1,5 @@
-#ifndef MY_UTILITY_H
-#define MY_UTILITY_H
+#ifndef __MY_UTILITY_H__
+#define __MY_UTILITY_H__
 
 #include <stdlib.h>
 #include <time.h>
@@ -23,4 +23,4 @@ void printVector(VECTOR3D v)
 	printf("(%lf, %lf, %lf)\n", v.x, v.y, v.z);
 }
 
-#endif
+#endif //__MY_UTILITY_H__

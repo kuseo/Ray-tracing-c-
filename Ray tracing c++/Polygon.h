@@ -1,5 +1,5 @@
-#ifndef POLYGON_H
-#define POLYGON_H
+#ifndef __POLYGON_H__
+#define ____
 
 
-#endif // !POLYGON_H
+#endif // __POLYGON_H__

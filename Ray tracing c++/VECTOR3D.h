@@ -1,5 +1,5 @@
-#ifndef VECTOR3D_H
-#define VECTOR3D_H
+#ifndef __VECTOR3D_H__
+#define __VECTOR3D_H__
 
 #include <math.h>
 
@@ -33,4 +33,4 @@ public:
 	float z;
 };
 
-#endif
+#endif //__VECTOR3D_H__

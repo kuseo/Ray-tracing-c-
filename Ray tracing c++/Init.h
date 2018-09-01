@@ -1,5 +1,5 @@
-#ifndef INIT_H
-#define INIT_H
+#ifndef __INIT_H__
+#define __INIT_H__
 
 #include "gl_helper.h"
 #define DIM 800
@@ -15,4 +15,4 @@ void Initialize(int argc, char **argv)
 	glEnable(GL_DEPTH_TEST);
 }
 
-#endif
+#endif //__INIT_H__

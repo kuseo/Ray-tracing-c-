@@ -1,5 +1,5 @@
-#ifndef RAY_H
-#define RAY_H
+#ifndef __RAY_H__
+#define __RAY_H__
 
 #include "VECTOR3D.h"
 
@@ -20,4 +20,4 @@ struct Ray
 	}
 };
 
-#endif
+#endif //__RAY_H__

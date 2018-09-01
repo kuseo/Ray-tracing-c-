@@ -1,8 +1,8 @@
-#ifndef SPEHERE_H
-#define SPEHERE_H
+#ifndef __SPEHERE_H__
+#define __SPEHERE_H__
 
 #include "Object.h"
-#include "my_utility.h"
+
 class Sphere : public Object
 {
 public:
@@ -127,4 +127,4 @@ public:
 	virtual VECTOR3D getSpecular() { return k_specular; }
 };
 
-#endif
+#endif //__SPEHERE_H__
