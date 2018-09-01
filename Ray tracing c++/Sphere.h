@@ -13,11 +13,6 @@ public:
 	VECTOR3D cen;
 	float rad;
 
-	VECTOR3D k_ambient;
-	VECTOR3D k_diffuse;
-	VECTOR3D k_specular;
-	float k_shineness = 64.0;
-
 	/*
 	constructor
 	*/
@@ -117,14 +112,6 @@ public:
 	}
 	
 	virtual VECTOR3D get_normal(VECTOR3D point) { return point - cen; }
-
-	virtual void setAmbient(VECTOR3D v) { k_ambient = v; }
-	virtual void setDiffuse(VECTOR3D v) { k_diffuse = v; }
-	virtual void setSpecular(VECTOR3D v) { k_specular = v; }
-
-	virtual VECTOR3D getAmbient() { return k_ambient; }
-	virtual VECTOR3D getDiffuse() { return k_diffuse;	}
-	virtual VECTOR3D getSpecular() { return k_specular; }
 };
 
 #endif //__SPEHERE_H__
