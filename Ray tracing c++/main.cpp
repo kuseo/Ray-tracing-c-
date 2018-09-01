@@ -96,13 +96,15 @@ VECTOR3D raytrace(Ray ray, int depth)
 	reflection vector
 	*/
 	VECTOR3D Reflection = (L * -1.0f) + N * 2.0f * ((L.InnerProduct(N)));
-
+	
 	if (depth > 0)
 		return o->k_ambient + (o->getColor(point, light, ray.origin)) * shadow
-		+ raytrace(Ray(point, Reflection), depth - 1) * 0.3f
-		+ raytrace(Ray(point, ray.dir), depth - 1) * 0.3f;
+			+ raytrace(Ray(point, Reflection), depth - 1) * 0.3f
+			+ raytrace(Ray(point, ray.dir), depth - 1) * 0.3f;
+		
 	else
-		return o->k_ambient +o->getColor(point, light, ray.origin) * shadow;
+		return o->k_ambient + o->getColor(point, light, ray.origin) * shadow;
+		
 }
 
 void display(void)
@@ -173,7 +175,7 @@ void key(unsigned char key, int x, int y)
 	*/
 	switch (key)
 	{
-	case '27':
+	case 27:
 		exit(0);
 	}
 }
