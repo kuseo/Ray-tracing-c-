@@ -15,7 +15,7 @@ VECTOR3D randomVector()
 
 	output.z = (rand() % 60) / 100.0f;
 
-	return;
+	return output;
 }
 
 void printVector(VECTOR3D v)
