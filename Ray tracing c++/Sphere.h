@@ -108,12 +108,20 @@ public:
 		reflection vector
 		*/
 		VECTOR3D R = (L * -1.0) + N * 2.0 * L.InnerProduct(N);
-		R.Normalize();
 
 		float diffuse = fmaxf(0.0f, N.InnerProduct(L));
 		float specular = pow(fmaxf(0.0f, I.InnerProduct(R)), k_shineness);
 		
-		return  k_diffuse * diffuse + k_specular * specular;
+		if (N.InnerProduct(L) > 0.0f)
+		{
+			printVector(this->k_diffuse);
+			printf("%lf\n", k_shineness);
+			printf("%lf\n", diffuse);
+			printVector(k_diffuse * diffuse);
+			system("pause");
+		}
+
+		return k_diffuse * diffuse + k_specular * specular;
 	}
 	
 	virtual VECTOR3D get_normal(VECTOR3D point)
@@ -121,6 +129,19 @@ public:
 		return point - cen;
 	}
 
+	virtual void setAmbient(VECTOR3D v)
+	{
+		k_ambient = v;
+	}
+	virtual void setDiffuse(VECTOR3D v)
+	{
+		k_diffuse = v;
+	}
+
+	virtual void setSpecular(VECTOR3D v)
+	{
+		k_specular = v;
+	}
 };
 
 #endif
