@@ -13,6 +13,7 @@
 #include <vector>
 #include "my_utility.h"
 #include "Sphere.h"
+#include "Plane.h"
 #include "Init.h"
 
 
@@ -86,7 +87,7 @@ VECTOR3D raytrace(Ray ray, int depth)
 				min_st = t;
 	}
 
-	if (min_st = 10000)
+	if (min_st == 10000.0f)
 		shadow = 1.0f;
 	else
 		shadow = 0.5f;
@@ -214,11 +215,11 @@ int main(int argc, char **argv)
 	create three balls with random matarial values.
 	*/
 	center.resize(3);
-	center[0] = VECTOR3D(2.0, -2.0, -8.0);
-	center[1] = VECTOR3D(-2.0, -2.0, -8.0);
-	center[2] = VECTOR3D(0.0, -2.0, -11.0);
+	center[0] = VECTOR3D(2.0, -3.0, -8.0);
+	center[1] = VECTOR3D(-2.0, -3.0, -8.0);
+	center[2] = VECTOR3D(0.0, -3.0, -11.0);
 
-	objects.resize(3);
+	objects.resize(4);
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i] = new Sphere(center[i], 2.0);
@@ -228,6 +229,16 @@ int main(int argc, char **argv)
 		objects[i]->setShineness(32.0);
 	}
 
+	/*
+	create infinite plane
+	*/
+	VECTOR3D plane_normal = VECTOR3D(0.0, 1.0, 0.0);
+	VECTOR3D plane_dot = VECTOR3D(0.0, -5.0, 0.0);
+	objects[3] = new Plane(plane_normal, plane_dot);
+	objects[3]->setAmbient(VECTOR3D(0.4,0.4,0.4));
+	objects[3]->setDiffuse(VECTOR3D(0.4, 0.4, 0.4));
+	objects[3]->setSpecular(VECTOR3D(0.4, 0.4, 0.4));
+	objects[3]->setShineness(1.0);
 
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
