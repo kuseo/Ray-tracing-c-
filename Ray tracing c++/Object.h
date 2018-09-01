@@ -34,16 +34,17 @@ public:
 	/*
 	setter
 	*/
-	virtual void setAmbient(VECTOR3D v) = 0 {};
-	virtual void setDiffuse(VECTOR3D v) = 0 {};
-	virtual void setSpecular(VECTOR3D v) = 0 {};
+	virtual void setAmbient(VECTOR3D v) { k_ambient = v; }
+	virtual void setDiffuse(VECTOR3D v) { k_diffuse = v; }
+	virtual void setSpecular(VECTOR3D v) { k_specular = v; }
+	virtual void setShineness(float value) { k_shineness = value; }
 
 	/*
 	getter
 	*/
-	virtual VECTOR3D getAmbient() {};
-	virtual VECTOR3D getDiffuse() {};
-	virtual VECTOR3D getSpecular() {};
+	virtual VECTOR3D getAmbient() { return k_ambient; }
+	virtual VECTOR3D getDiffuse() { return k_diffuse; }
+	virtual VECTOR3D getSpecular() { return k_specular; }
 };
 
 #endif //__OBJECT_H__
