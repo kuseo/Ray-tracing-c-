@@ -112,6 +112,7 @@ public:
 	}
 	
 	virtual VECTOR3D get_normal(VECTOR3D point) { return point - cen; }
+	virtual VECTOR3D get_normal() { return VECTOR3D(0.0, 0.0, 0.0); }
 };
 
 #endif //__SPEHERE_H__

@@ -30,6 +30,9 @@ public:
 	virtual bool hit(Ray r, float *t) = 0 {}
 	virtual VECTOR3D getColor(VECTOR3D point, VECTOR3D light, VECTOR3D ray) = 0 {}
 	virtual VECTOR3D get_normal(VECTOR3D point) = 0 {}
+	virtual VECTOR3D get_normal() = 0 {}
+
+
 	
 	/*
 	setter
