@@ -41,9 +41,9 @@ public:
 	/*
 	getter
 	*/
-	virtual VECTOR3D getAmbient() = 0 {};
-	virtual VECTOR3D getDiffuse() = 0 {};
-	virtual VECTOR3D getSpecular() = 0 {};
+	virtual VECTOR3D getAmbient() {};
+	virtual VECTOR3D getDiffuse() {};
+	virtual VECTOR3D getSpecular() {};
 };
 
 #endif //__OBJECT_H__
