@@ -225,6 +225,7 @@ int main(int argc, char **argv)
 		objects[i]->setAmbient(randomVector());
 		objects[i]->setDiffuse(randomVector());
 		objects[i]->setSpecular(randomVector());
+		objects[i]->setShineness(32.0);
 	}
 
 
