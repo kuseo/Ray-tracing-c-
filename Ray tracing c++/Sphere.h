@@ -17,7 +17,7 @@ public:
 	constructor
 	*/
 	Sphere() {}
-	Sphere(VECTOR3D cen, float rad) :cen(cen), rad(rad) { }
+	Sphere(VECTOR3D cen, float rad) : cen(cen), rad(rad) { }
 
 	/*
 	destructor
