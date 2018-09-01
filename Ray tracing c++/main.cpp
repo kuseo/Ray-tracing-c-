@@ -239,10 +239,7 @@ int main(int argc, char **argv)
 	*/
 	objects[3] = new Sphere(light, 0.3f);
 	VECTOR3D l = VECTOR3D(1.0f, 1.0f, 1.0f);
-	objects[3]->k_ambient = l;
-	objects[3]->k_diffuse = l;
-	objects[3]->k_specular = l;
-
+	objects[3]->setAmbient(l);
 
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);

@@ -5,15 +5,15 @@
 #include <time.h>
 #include "VECTOR3D.h"
 
-void randomVector(VECTOR3D *v)
+VECTOR3D randomVector()
 {
 	VECTOR3D output;
 
-	v->x = (rand() % 60) / 100.0f;
+	output.x = (rand() % 60) / 100.0f;
 
-	v->y = (rand() % 60) / 100.0f;
+	output.y = (rand() % 60) / 100.0f;
 
-	v->z = (rand() % 60) / 100.0f;
+	output.z = (rand() % 60) / 100.0f;
 
 	return;
 }
