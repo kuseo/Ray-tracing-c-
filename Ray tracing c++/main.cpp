@@ -185,16 +185,12 @@ void arrowkey(int key, int x, int y)
 	switch (key)
 	{
 	case GLUT_KEY_UP:
-		eye.y += 0.05;
 		break;
 	case GLUT_KEY_DOWN:
-		eye.y -= 0.05;
 		break;
 	case GLUT_KEY_LEFT:
-		eye.x -= 0.05;
 		break;
 	case GLUT_KEY_RIGHT:
-		eye.x += 0.05;
 		break;
 	}
 	printVector(eye);
