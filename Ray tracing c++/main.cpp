@@ -2,6 +2,11 @@
 *	Ray Tracing			 *
 *	08.29.18			 *
 *************************/
+
+/*
+	To Do :
+	polygon, plane, mesh loader, refraction
+*/
 #pragma warning(disable:4996)
 
 #include <stdio.h>
