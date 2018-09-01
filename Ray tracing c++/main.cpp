@@ -210,30 +210,21 @@ int main(int argc, char **argv)
 
 	Initialize(argc, argv);
 
-	objects.resize(3);
+	/*
+	create three balls with random matarial values.
+	*/
 	center.resize(3);
 	center[0] = VECTOR3D(2.0, -2.0, -8.0);
 	center[1] = VECTOR3D(-2.0, -2.0, -8.0);
 	center[2] = VECTOR3D(0.0, -2.0, -11.0);
 
+	objects.resize(3);
 	for (int i = 0; i < objects.size(); i++)
 	{
-		printf("object #%d\n", i);
 		objects[i] = new Sphere(center[i], 2.0);
-
-		printf("ambient : ");
 		objects[i]->setAmbient(randomVector());
-		printVector(objects[i]->getAmbient());
-
-		printf("diffuse : ");
 		objects[i]->setDiffuse(randomVector());
-		printVector(objects[i]->getDiffuse());
-
-		printf("specular : ");
 		objects[i]->setSpecular(randomVector());
-		printVector(objects[i]->getSpecular());
-
-		printf("\n\n");
 	}
 
 
