@@ -29,14 +29,14 @@ public:
 	*/
 	virtual bool hit(Ray r, float *t)
 	{
-		float b = 2.0 * r.dir.InnerProduct(r.origin - cen);
+		float b = 2.0f * r.dir.InnerProduct(r.origin - cen);
 		float c = pow((r.origin - cen).Magnitude(), 2) - (rad * rad);
-		float d = b * b - (4.0 * c); //discriminant
+		float d = b * b - (4.0f * c); //discriminant
 
 		/*
 		ray doesn't intersect with sphere
 		*/
-		if (d < 0.0)
+		if (d < 0.0f)
 		{
 			*t = 10000.0;
 			return false;
@@ -45,14 +45,14 @@ public:
 		/*
 		ray intersect at only one point
 		*/
-		else if (d == 0.0)
+		else if (d == 0.0f)
 		{
-			*t = (-1.0 * b) / 2.0;
+			*t = (-1.0f * b) / 2.0f;
 
 			/*
 			we set this condition to avoid self collision when calculate reflection and refraction
 			*/
-			if (*t > 0.01)
+			if (*t > 0.01f)
 				return true;
 			else
 				return false;
@@ -63,13 +63,13 @@ public:
 		*/
 		else
 		{
-			float t1 = ((-1.0 * b) - sqrt(d)) / 2.0;
-			float t2 = ((-1.0 * b) + sqrt(d)) / 2.0;
+			float t1 = ((-1.0f * b) - sqrt(d)) / 2.0f;
+			float t2 = ((-1.0f * b) + sqrt(d)) / 2.0f;
 
 			/*
 			sphere shoud be at the positive direction of the ray 
 			*/
-			if (t1 > 0.01 && t2 > 0.01)
+			if (t1 > 0.01f && t2 > 0.01f)
 			{
 				*t = (t1 < t2) ? t1 : t2;
 				return true;
