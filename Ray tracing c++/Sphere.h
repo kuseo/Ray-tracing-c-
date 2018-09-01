@@ -16,7 +16,7 @@ public:
 	VECTOR3D k_ambient;
 	VECTOR3D k_diffuse;
 	VECTOR3D k_specular;
-	float k_shineness = 32.0;
+	float k_shineness = 64.0;
 
 	/*
 	constructor
@@ -108,11 +108,11 @@ public:
 		reflection vector
 		*/
 		VECTOR3D R = (L * -1.0) + N * 2.0 * L.InnerProduct(N);
-		
+		R.Normalize();
+
 		float diffuse = fmaxf(0.0f, N.InnerProduct(L));
-		float specular = pow(fmaxf(0.0f, I.InnerProduct(R)), (int)k_shineness);
-
-
+		float specular = pow(fmaxf(0.0f, I.InnerProduct(R)), k_shineness);
+		
 		return  k_diffuse * diffuse + k_specular * specular;
 	}
 	
