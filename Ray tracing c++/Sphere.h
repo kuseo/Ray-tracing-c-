@@ -2,7 +2,7 @@
 #define SPEHERE_H
 
 #include "Object.h"
-
+#include "my_utility.h"
 class Sphere : public Object
 {
 public:
@@ -96,24 +96,26 @@ public:
 		ray vector
 		*/
 		VECTOR3D I = ray - point;
+		I.Normalize();
 
 		/*
-		¿‘ªÁ±§ ∫§≈Õ
+		light vector
 		*/
 		VECTOR3D L = light - point;
 		L.Normalize();
 
 		/*
-		π›ªÁ±§ ∫§≈Õ
+		reflection vector
 		*/
-		VECTOR3D R = (L * -1.0) + N * 2.0 * ((L.InnerProduct(N)));
+		VECTOR3D R = (L * -1.0) + N * 2.0 * L.InnerProduct(N);
 		
-		float diffuse = fmaxf(0.0, N.InnerProduct(L));
-		float specular = pow(fmaxf((float)0.0, I.InnerProduct(R)), k_shineness);
+		float diffuse = fmaxf(0.0f, N.InnerProduct(L));
+		float specular = pow(fmaxf(0.0f, I.InnerProduct(R)), (int)k_shineness);
+
 
 		return  k_diffuse * diffuse + k_specular * specular;
 	}
-
+	
 	virtual VECTOR3D get_normal(VECTOR3D point)
 	{
 		return point - cen;

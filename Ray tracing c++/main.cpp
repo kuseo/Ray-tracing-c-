@@ -24,15 +24,15 @@ GLint viewport[4];
 
 vector<Object*> objects;
 vector<VECTOR3D> center;
-VECTOR3D eye = VECTOR3D(0.0, 0.0, 0.0);			//position of the camera, which is the origin of the ray
-VECTOR3D light = VECTOR3D(0.0, 5.0, -9.0);		//position of the light
+VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//position of the camera, which is the origin of the ray
+VECTOR3D light = VECTOR3D(0.0f, 5.0f, -9.0f);		//position of the light
 
 VECTOR3D raytrace(Ray ray, int depth)
 {
 	/*
 	infinite distance
 	*/
-	float min_t = 10000;
+	float min_t = 10000.0f;
 
 	Object *o = NULL;
 
@@ -54,11 +54,11 @@ VECTOR3D raytrace(Ray ray, int depth)
 		}
 	}
 
-	if (min_t == 10000)
+	if (min_t == 10000.0f)
 		return VECTOR3D(0.4, 0.4, 0.4);		//background color
 
-	float shadow = 1.0;
-	float min_st = 10000;
+	float shadow = 1.0f;
+	float min_st = 10000.0f;
 
 	/*
 	point where ray and object are intersected
@@ -82,9 +82,9 @@ VECTOR3D raytrace(Ray ray, int depth)
 	}
 
 	if (min_st = 10000)
-		shadow = 1.0;
+		shadow = 1.0f;
 	else
-		shadow = 0.5;
+		shadow = 0.5f;
 
 	/*
 	normal vector at the surface of the object
@@ -95,12 +95,12 @@ VECTOR3D raytrace(Ray ray, int depth)
 	/*
 	reflection vector
 	*/
-	VECTOR3D Reflection = (L * -1.0) + N * 2.0 * ((L.InnerProduct(N)));
+	VECTOR3D Reflection = (L * -1.0f) + N * 2.0f * ((L.InnerProduct(N)));
 
 	if (depth > 0)
 		return o->k_ambient + (o->getColor(point, light, ray.origin)) * shadow
-		+ raytrace(Ray(point, Reflection), depth - 1) * 0.3
-		+ raytrace(Ray(point, ray.dir), depth - 1) * 0.3;
+		+ raytrace(Ray(point, Reflection), depth - 1) * 0.3f
+		+ raytrace(Ray(point, ray.dir), depth - 1) * 0.3f;
 	else
 		return o->k_ambient +o->getColor(point, light, ray.origin) * shadow;
 }
@@ -235,8 +235,8 @@ int main(int argc, char **argv)
 	/*
 	light ball
 	*/
-	objects[3] = new Sphere(light, 0.3);
-	VECTOR3D l = VECTOR3D(1.0, 1.0, 1.0);
+	objects[3] = new Sphere(light, 0.3f);
+	VECTOR3D l = VECTOR3D(1.0f, 1.0f, 1.0f);
 	objects[3]->k_ambient = l;
 	objects[3]->k_diffuse = l;
 	objects[3]->k_specular = l;
