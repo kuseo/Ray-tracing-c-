@@ -48,7 +48,15 @@ public:
 			VECTOR3D temp = dot - r.origin;
 			float numerator = temp.InnerProduct(normal);
 			*t = numerator / denom;
-			return true;
+
+			/*
+			we set this condition to avoid self collision when calculate reflection and refraction
+			*/
+			if (*t > 0.01f)
+				return true;
+			else
+				return false;
+				
 		}
 	}
 
