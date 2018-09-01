@@ -37,6 +37,13 @@ public:
 	virtual void setAmbient(VECTOR3D v) = 0 {};
 	virtual void setDiffuse(VECTOR3D v) = 0 {};
 	virtual void setSpecular(VECTOR3D v) = 0 {};
+
+	/*
+	getter
+	*/
+	virtual VECTOR3D getAmbient() = 0 {};
+	virtual VECTOR3D getDiffuse() = 0 {};
+	virtual VECTOR3D getSpecular() = 0 {};
 };
 
 #endif
