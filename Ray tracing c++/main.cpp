@@ -21,9 +21,6 @@ using namespace std;
 
 int depth = 0;
 
-/*
-get matrices
-*/
 GLdouble modelMatrix[16];
 GLdouble projMatrix[16];
 GLint viewport[4];
@@ -31,7 +28,8 @@ GLint viewport[4];
 vector<Object*> objects;
 vector<VECTOR3D> center;
 VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//position of the camera, which is the origin of the ray
-VECTOR3D light = VECTOR3D(0.0f, 10.0f, -9.0f);		//position of the light
+VECTOR3D light = VECTOR3D(0.0f, 10.0f, -8.0f);		//position of the light
+
 
 VECTOR3D raytrace(Ray ray, int depth)
 {
@@ -106,7 +104,7 @@ VECTOR3D raytrace(Ray ray, int depth)
 	if (depth > 0)
 		return o->k_ambient + (o->getColor(point, light, ray.origin)) * shadow
 			+ raytrace(Ray(point, Reflection), depth - 1) * 0.3f
-			+ raytrace(Ray(point, ray.dir), depth - 1) * 0.3f;
+			+ raytrace(Ray(point, ray.dir), depth - 1) * 0.1f;
 		
 	else
 		return o->k_ambient + o->getColor(point, light, ray.origin) * shadow;
@@ -116,13 +114,15 @@ VECTOR3D raytrace(Ray ray, int depth)
 void display(void)
 {
 	/*
-	draw
+	get matrices
 	*/
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
 	glGetDoublev(GL_MODELVIEW_MATRIX, modelMatrix);
 	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
 	glGetIntegerv(GL_VIEWPORT, viewport);
+	/*
+	draw
+	*/
+	glClear(GL_COLOR_BUFFER_BIT );
 
 	glBegin(GL_POINTS);
 	for (int i = 0; i < glutGet(GLUT_WINDOW_WIDTH); i++)
@@ -159,7 +159,6 @@ void display(void)
 		}
 
 	glutSwapBuffers();
-	//glutPostRedisplay();
 }
 
 void reshape(int w, int h)
@@ -171,7 +170,6 @@ void reshape(int w, int h)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-
 	glOrtho(-1.0 * wfactor, 1.0 * wfactor, -1.0 * hfactor, 1.0 * hfactor, 1.0, -1.0);
 }
 
@@ -207,7 +205,8 @@ int main(int argc, char **argv)
 {
 	printf("depth : ");
 	scanf("%d", &depth);
-	srand(time(0));
+
+	srand(99);
 
 	Initialize(argc, argv);
 
@@ -220,7 +219,7 @@ int main(int argc, char **argv)
 	center[2] = VECTOR3D(0.0, -3.0, -11.0);
 
 	objects.resize(4);
-	for (int i = 0; i < objects.size(); i++)
+	for (int i = 0; i < objects.size() - 1; i++)
 	{
 		objects[i] = new Sphere(center[i], 2.0);
 		objects[i]->setAmbient(randomVector());
@@ -234,10 +233,11 @@ int main(int argc, char **argv)
 	*/
 	VECTOR3D plane_normal = VECTOR3D(0.0, 1.0, 0.0);
 	VECTOR3D plane_dot = VECTOR3D(0.0, -5.0, 0.0);
+	VECTOR3D temp = VECTOR3D(0.3, 0.3, 0.3);
 	objects[3] = new Plane(plane_normal, plane_dot);
-	objects[3]->setAmbient(VECTOR3D(0.4,0.4,0.4));
-	objects[3]->setDiffuse(VECTOR3D(0.4, 0.4, 0.4));
-	objects[3]->setSpecular(VECTOR3D(0.4, 0.4, 0.4));
+	objects[3]->setAmbient(temp);
+	objects[3]->setDiffuse(temp);
+	objects[3]->setSpecular(temp);
 	objects[3]->setShineness(1.0);
 
 	glutReshapeFunc(reshape);
