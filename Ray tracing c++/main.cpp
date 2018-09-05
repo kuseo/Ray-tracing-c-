@@ -30,6 +30,7 @@ vector<VECTOR3D> center;
 const VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//position of the camera, which is the origin of the ray
 VECTOR3D light = VECTOR3D(0.0f, 10.0f, -8.0f);		//position of the light
 
+int _i = 1;		//double buffer test
 
 VECTOR3D raytrace(Ray ray, int depth)
 {
@@ -113,10 +114,29 @@ VECTOR3D raytrace(Ray ray, int depth)
 
 void display(void)
 {
+
+	/*
+		
+	system("pause");
+	if (_i % 2)
+		printf("front\n");
+	else
+		printf("back\n");
+	_i++;
+	for (int i = 0; i < 16; i++)
+	{
+		printf("%f ", modelMatrix[i]);
+		if ((i+1) % 4==0)
+			printf("\n");
+	}
+	printf("\n");
+	*/
+
+
 	/*
 	draw
 	*/
-	glClear(GL_COLOR_BUFFER_BIT );
+	glClear(GL_COLOR_BUFFER_BIT);
 	
 	glBegin(GL_POINTS);
 	for (int i = 0; i < glutGet(GLUT_WINDOW_WIDTH); i++)
@@ -151,7 +171,6 @@ void display(void)
 			glColor3f(color.x, color.y, color.z);
 			glVertex3f(near.x, near.y, near.z);
 		}
-
 	glutSwapBuffers();
 }
 
@@ -172,6 +191,8 @@ void reshape(int w, int h)
 	glGetDoublev(GL_MODELVIEW_MATRIX, modelMatrix);
 	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
 	glGetIntegerv(GL_VIEWPORT, viewport);
+
+	glutPostRedisplay();
 }
 
 
