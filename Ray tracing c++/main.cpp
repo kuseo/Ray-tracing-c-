@@ -27,7 +27,7 @@ GLint viewport[4];
 
 vector<Object*> objects;
 vector<VECTOR3D> center;
-VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//position of the camera, which is the origin of the ray
+const VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//position of the camera, which is the origin of the ray
 VECTOR3D light = VECTOR3D(0.0f, 10.0f, -8.0f);		//position of the light
 
 
@@ -114,16 +114,8 @@ VECTOR3D raytrace(Ray ray, int depth)
 void display(void)
 {
 	/*
-	get matrices
-	*/
-	glGetDoublev(GL_MODELVIEW_MATRIX, modelMatrix);
-	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
-	glGetIntegerv(GL_VIEWPORT, viewport);
-	/*
 	draw
 	*/
-
-
 	glClear(GL_COLOR_BUFFER_BIT );
 	
 	glBegin(GL_POINTS);
@@ -172,7 +164,17 @@ void reshape(int w, int h)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-1.0 * wfactor, 1.0 * wfactor, -1.0 * hfactor, 1.0 * hfactor, 1.0, -1.0);}
+	glOrtho(-1.0 * wfactor, 1.0 * wfactor, -1.0 * hfactor, 1.0 * hfactor, 1.0, -1.0);
+
+	/*
+	get matrices
+	*/
+	glGetDoublev(GL_MODELVIEW_MATRIX, modelMatrix);
+	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
+	glGetIntegerv(GL_VIEWPORT, viewport);
+}
+
+
 
 void key(unsigned char key, int x, int y)
 {
