@@ -122,8 +122,10 @@ void display(void)
 	/*
 	draw
 	*/
-	glClear(GL_COLOR_BUFFER_BIT );
 
+
+	glClear(GL_COLOR_BUFFER_BIT );
+	
 	glBegin(GL_POINTS);
 	for (int i = 0; i < glutGet(GLUT_WINDOW_WIDTH); i++)
 		for (int j = 1; j <= glutGet(GLUT_WINDOW_HEIGHT); j++)
@@ -170,8 +172,7 @@ void reshape(int w, int h)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-1.0 * wfactor, 1.0 * wfactor, -1.0 * hfactor, 1.0 * hfactor, 1.0, -1.0);
-}
+	glOrtho(-1.0 * wfactor, 1.0 * wfactor, -1.0 * hfactor, 1.0 * hfactor, 1.0, -1.0);}
 
 void key(unsigned char key, int x, int y)
 {
@@ -211,21 +212,25 @@ int main(int argc, char **argv)
 	Initialize(argc, argv);
 
 	/*
-	create three balls with random matarial values.
+	create three balls.
 	*/
 	center.resize(3);
 	center[0] = VECTOR3D(2.0, -3.0, -8.0);
 	center[1] = VECTOR3D(-2.0, -3.0, -8.0);
 	center[2] = VECTOR3D(0.0, -3.0, -11.0);
-
-	objects.resize(4);
-	for (int i = 0; i < objects.size() - 1; i++)
+	int index = 0;
+	while (true)
 	{
-		objects[i] = new Sphere(center[i], 2.0);
-		objects[i]->setAmbient(randomVector());
-		objects[i]->setDiffuse(randomVector());
-		objects[i]->setSpecular(randomVector());
-		objects[i]->setShineness(32.0);
+		objects.push_back(new Sphere(center[index], 2.0));
+		objects[objects.size() - 1] = new Sphere(center[index], 2.0);
+		objects[objects.size() - 1]->setAmbient(randomVector());
+		objects[objects.size() - 1]->setDiffuse(randomVector());
+		objects[objects.size() - 1]->setSpecular(randomVector());
+		objects[objects.size() - 1]->setShineness(32.0);
+		index++;
+
+		if (index == 3)
+			break;
 	}
 
 	/*
@@ -234,11 +239,11 @@ int main(int argc, char **argv)
 	VECTOR3D plane_normal = VECTOR3D(0.0, 1.0, 0.0);
 	VECTOR3D plane_dot = VECTOR3D(0.0, -5.0, 0.0);
 	VECTOR3D temp = VECTOR3D(0.3, 0.3, 0.3);
-	objects[3] = new Plane(plane_normal, plane_dot);
-	objects[3]->setAmbient(temp);
-	objects[3]->setDiffuse(temp);
-	objects[3]->setSpecular(temp);
-	objects[3]->setShineness(1.0);
+	objects.push_back(new Plane(plane_normal, plane_dot));
+	objects[objects.size() - 1]->setAmbient(temp);
+	objects[objects.size() - 1]->setDiffuse(temp);
+	objects[objects.size() - 1]->setSpecular(temp);
+	objects[objects.size() - 1]->setShineness(1.0);
 
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
