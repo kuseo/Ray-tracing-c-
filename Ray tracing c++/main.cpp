@@ -14,6 +14,7 @@
 #include "my_utility.h"
 #include "Sphere.h"
 #include "Plane.h"
+#include "Polygon.h"
 #include "Init.h"
 
 #undef near
