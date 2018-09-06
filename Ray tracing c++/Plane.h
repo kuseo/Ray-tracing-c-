@@ -60,38 +60,6 @@ public:
 		}
 	}
 
-	virtual VECTOR3D getColor(VECTOR3D point, VECTOR3D light, VECTOR3D ray)
-	{
-		/*
-		normal vector
-		*/
-		VECTOR3D N = get_normal();
-		N.Normalize();
-
-		/*
-		ray vector
-		*/
-		VECTOR3D I = ray - point;
-		I.Normalize();
-
-		/*
-		light vector
-		*/
-		VECTOR3D L = light - point;
-		L.Normalize();
-
-		/*
-		reflection vector
-		*/
-		VECTOR3D R = (L * -1.0) + N * 2.0 * L.InnerProduct(N);
-
-		float diffuse = fmaxf(0.0f, N.InnerProduct(L));
-		float specular = pow(fmaxf(0.0f, I.InnerProduct(R)), k_shineness);
-
-
-		return k_diffuse * diffuse + k_specular * specular;
-	}
-
 	virtual VECTOR3D get_normal(VECTOR3D point) { return normal; }	//don't use
 	virtual VECTOR3D get_normal() { return normal; }
 };
