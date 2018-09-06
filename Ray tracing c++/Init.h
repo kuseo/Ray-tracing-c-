@@ -7,12 +7,10 @@
 void Initialize(int argc, char **argv)
 {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(DIM, DIM);
 	glutCreateWindow("Ray Tracing");
-
-	glEnable(GL_DEPTH_TEST);
 }
 
 #endif //__INIT_H__
