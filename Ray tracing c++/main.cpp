@@ -116,25 +116,6 @@ VECTOR3D raytrace(Ray ray, int depth)
 
 void display(void)
 {
-
-	/*
-		
-	system("pause");
-	if (_i % 2)
-		printf("front\n");
-	else
-		printf("back\n");
-	_i++;
-	for (int i = 0; i < 16; i++)
-	{
-		printf("%f ", modelMatrix[i]);
-		if ((i+1) % 4==0)
-			printf("\n");
-	}
-	printf("\n");
-	*/
-
-
 	/*
 	draw
 	*/
@@ -208,6 +189,18 @@ void key(unsigned char key, int x, int y)
 	{
 	case 27:
 		exit(0);
+	case 'w':
+	case 'W':
+		break;
+	case 'a':
+	case 'A':
+		break;
+	case 's':
+	case 'S':
+		break;
+	case 'd':
+	case 'D':
+		break;
 	}
 }
 
@@ -224,7 +217,7 @@ void arrowkey(int key, int x, int y)
 	case GLUT_KEY_RIGHT:
 		break;
 	}
-	printVector(eye);
+	glutPostRedisplay();
 }
 
 int main(int argc, char **argv)
