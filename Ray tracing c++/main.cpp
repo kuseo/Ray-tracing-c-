@@ -15,7 +15,8 @@
 #include "Sphere.h"
 #include "Init.h"
 
-
+#undef near
+#undef far
 using namespace std;
 
 int depth = 0;
@@ -206,7 +207,7 @@ int main(int argc, char **argv)
 {
 	printf("depth : ");
 	scanf("%d", &depth);
-	srand(time(0));
+	srand(99);
 
 	Initialize(argc, argv);
 
