@@ -9,12 +9,14 @@ public:
 	member variables
 	*/
 	VECTOR3D a, b, c;
-	VECTOR3D alpha, beta, gamma;
+	float alpha, beta, gamma;
 
 	/*
 		constructor
 	*/
 	Polygon() {}
+	Polygon(VECTOR3D a, VECTOR3D b, VECTOR3D c) :
+		a(a), b(b), c(c) {}
 
 	/*
 	destructor
@@ -26,7 +28,20 @@ public:
 	*/
 	void varicentric(Ray r)
 	{
+		VECTOR3D edgeAB = b - a;
+		VECTOR3D edgeAC = c - a;
+		VECTOR3D pvec = r.dir.CrossProduct(edgeAC);
+		float det = edgeAB.InnerProduct(pvec);	//matrix determinant
 
+		float invDet = 1 / det;	//inverse of determinant
+
+		VECTOR3D tvec = r.origin - a;
+		this->beta = tvec.InnerProduct(pvec) * invDet;
+
+		VECTOR3D qvec = tvec.CrossProduct(edgeAB);
+		gamma = r.dir.InnerProduct(qvec) * invDet;
+
+		alpha = 1 - beta - gamma;
 	}
 
 	virtual bool hit(Ray r, float *t)
