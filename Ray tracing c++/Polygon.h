@@ -2,6 +2,8 @@
 #define __POLYGON_H__
 
 #include "Object.h"
+#include "Plane.h"
+
 class Polygon : public Object
 {
 public:
@@ -9,7 +11,6 @@ public:
 	member variables
 	*/
 	VECTOR3D a, b, c;
-	float alpha, beta, gamma;
 
 	/*
 		constructor
@@ -26,7 +27,7 @@ public:
 	/*
 	member function
 	*/
-	void varicentric(Ray r)
+	void varicentric(Ray r, float *alpha, float *beta, float *gamma)
 	{
 		VECTOR3D edgeAB = b - a;
 		VECTOR3D edgeAC = c - a;
@@ -36,17 +37,42 @@ public:
 		float invDet = 1 / det;	//inverse of determinant
 
 		VECTOR3D tvec = r.origin - a;
-		this->beta = tvec.InnerProduct(pvec) * invDet;
+		*beta = tvec.InnerProduct(pvec) * invDet;
 
 		VECTOR3D qvec = tvec.CrossProduct(edgeAB);
-		gamma = r.dir.InnerProduct(qvec) * invDet;
+		*gamma = r.dir.InnerProduct(qvec) * invDet;
 
-		alpha = 1 - beta - gamma;
+		*alpha = 1 - *beta - *gamma;
 	}
 
 	virtual bool hit(Ray r, float *t)
 	{
+		float alpha, beta, gamma;
+		this->varicentric(r, &alpha, &beta, &gamma);
 
+		/*
+		ray doesn't intersect with polygon
+		*/
+		if (alpha < 0 || alpha > 1 ||
+			beta < 0 || beta > 1 ||
+			gamma < 0 || gamma >1)
+			return false;
+
+		/*
+		ray intersect with polygon
+		*/
+		else
+		{
+			/*
+			create infinite plane that contains polygon to get the intersection point
+			*/
+			VECTOR3D edgeAB = b - a;
+			VECTOR3D edgeAC = c - a;
+			VECTOR3D n = edgeAB.CrossProduct(edgeAC);	//normal
+			Plane polygon(n, this->a);
+
+			return polygon.hit(r, t);
+		}
 	}
 
 	virtual VECTOR3D getColor(VECTOR3D point, VECTOR3D light, VECTOR3D ray)
@@ -54,14 +80,13 @@ public:
 
 	}
 
-	virtual VECTOR3D get_normal(VECTOR3D point)
-	{
-
-	}
+	virtual VECTOR3D get_normal(VECTOR3D point) { return VECTOR3D(0.0, 0.0, 0.0); }	//don't use
 
 	virtual VECTOR3D get_normal()
 	{
-
+		VECTOR3D edgeAB = b - a;
+		VECTOR3D edgeAC = c - a;
+		return edgeAB.CrossProduct(edgeAC);
 	}
 };
 
