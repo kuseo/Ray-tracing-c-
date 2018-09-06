@@ -16,6 +16,8 @@
 #include "Plane.h"
 #include "Init.h"
 
+#undef near
+#undef far
 
 using namespace std;
 
