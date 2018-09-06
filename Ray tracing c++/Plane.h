@@ -92,7 +92,7 @@ public:
 		return k_diffuse * diffuse + k_specular * specular;
 	}
 
-	virtual VECTOR3D get_normal(VECTOR3D point) { return normal; }
+	virtual VECTOR3D get_normal(VECTOR3D point) { return normal; }	//don't use
 	virtual VECTOR3D get_normal() { return normal; }
 };
 
