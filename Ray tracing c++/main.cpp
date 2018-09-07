@@ -29,7 +29,6 @@ GLdouble projMatrix[16];
 GLint viewport[4];
 
 vector<Object*> objects;
-vector<VECTOR3D> center;
 const VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//position of the camera, which is the origin of the ray
 VECTOR3D light = VECTOR3D(0.0f, 10.0f, -8.0f);		//position of the light
 
@@ -230,13 +229,14 @@ int main(int argc, char **argv)
 
 	Initialize(argc, argv);
 
-	/*
-	create three balls.
-	*/
+	vector<VECTOR3D> center;
 	center.resize(3);
 	center[0] = VECTOR3D(2.0, -3.0, -8.0);
 	center[1] = VECTOR3D(-2.0, -3.0, -8.0);
 	center[2] = VECTOR3D(0.0, -3.0, -11.0);
+	/*
+	create three balls.
+	*/
 	int index = 0;
 	while (true)
 	{
@@ -251,6 +251,7 @@ int main(int argc, char **argv)
 		if (index == 3)
 			break;
 	}
+	
 
 	/*
 	create infinite plane
@@ -259,6 +260,20 @@ int main(int argc, char **argv)
 	VECTOR3D plane_dot = VECTOR3D(0.0, -5.0, 0.0);
 	VECTOR3D temp = VECTOR3D(0.3, 0.3, 0.3);
 	objects.push_back(new Plane(plane_normal, plane_dot));
+	objects[objects.size() - 1]->setAmbient(temp);
+	objects[objects.size() - 1]->setDiffuse(temp);
+	objects[objects.size() - 1]->setSpecular(temp);
+	objects[objects.size() - 1]->setShineness(1.0);
+
+	/*
+	create a polygon
+	*/
+	temp = VECTOR3D(2.0, 2.0, 2.0);
+	for (int i = 0; i < 3; i++)
+	{
+		center[i] += temp;
+	}
+	objects.push_back(new Polygon(center[0], center[1], center[2]));
 	objects[objects.size() - 1]->setAmbient(temp);
 	objects[objects.size() - 1]->setDiffuse(temp);
 	objects[objects.size() - 1]->setSpecular(temp);
