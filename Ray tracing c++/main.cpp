@@ -154,6 +154,7 @@ void display(void)
 			glColor3f(color.x, color.y, color.z);
 			glVertex3f(near.x, near.y, near.z);
 		}
+
 	glutSwapBuffers();
 }
 
@@ -202,6 +203,7 @@ void key(unsigned char key, int x, int y)
 	case 'D':
 		break;
 	}
+	glutPostRedisplay();
 }
 
 void arrowkey(int key, int x, int y)
