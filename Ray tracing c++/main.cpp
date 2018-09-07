@@ -32,8 +32,6 @@ vector<Object*> objects;
 const VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//position of the camera, which is the origin of the ray
 VECTOR3D light = VECTOR3D(0.0f, 10.0f, -8.0f);		//position of the light
 
-int _i = 1;		//double buffer test
-
 VECTOR3D raytrace(Ray ray, int depth)
 {
 	/*
