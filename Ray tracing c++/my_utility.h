@@ -1,8 +1,7 @@
 #ifndef __MY_UTILITY_H__
 #define __MY_UTILITY_H__
 
-#include <stdlib.h>
-#include <time.h>
+#include <stdio.h>
 #include "VECTOR3D.h"
 
 VECTOR3D randomVector()
