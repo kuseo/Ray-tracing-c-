@@ -11,7 +11,7 @@ void Matrix::setValue(float * value, int col, int row)
 	this->m = new float(col * row);
 
 	for (int i = 0; i < col * row; i++)
-		m[i] = value[i];
+		this->m[i] = value[i];
 }
 
 Matrix Matrix::operator*(const Matrix & a)
@@ -22,17 +22,17 @@ Matrix Matrix::operator*(const Matrix & a)
 		exit(0);
 	}
 
-	float *temp = new float(row * a.col);
-	for (int i = 0; i < row * a.col; i++)
+	float *temp = new float(this->row * a.col);
+	for (int i = 0; i < this->row * a.col; i++)
 		temp[i] = 0.0f;
 
-	for (int i = 0; i < row; i++)
+	for (int i = 0; i < this->row; i++)
 		for (int j = 0; j < a.col; j++)
-			for (int k = 0; k < col; k++)
-				temp[i*a.col + j] += this->m[i * col + k] * a.m[k * a.col + j];
+			for (int k = 0; k < this->col; k++)
+				temp[i*a.col + j] += this->m[i * this->col + k] * a.m[k * a.col + j];
 
 	Matrix output;
-	output.setValue(temp, col, a.row);
+	output.setValue(temp, this->col, a.row);
 	delete(temp);
 
 	return output;
@@ -46,8 +46,8 @@ Matrix Matrix::operator=(const Matrix & a)
 	if (this->m)
 		delete(m);
 
-	this->m = new float(col * row);
-	for (int i = 0; i < col * row; i++)
+	this->m = new float(a.col * a.row);
+	for (int i = 0; i < a.col * a.row; i++)
 		this->m[i] = a.m[i];
 
 	return *this;
