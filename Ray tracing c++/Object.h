@@ -61,6 +61,7 @@ public:
 
 		return k_diffuse * diffuse + k_specular * specular;
 	}
+	virtual void matrixMult(float *m) = 0 {}
 
 	/*
 	setter
