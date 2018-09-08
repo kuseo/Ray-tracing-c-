@@ -68,12 +68,12 @@ public:
 		/*
 		make Homogeneous cooldinates
 		*/
-		float n[4] = { normal.x, normal.y, normal.z, 0.0f };
-		float d[4] = { dot.x, dot.y, dot.z, 1.0f };
+		float _normal[4] = { normal.x, normal.y, normal.z, 0.0f };
+		float _dot[4] = { dot.x, dot.y, dot.z, 1.0f };
 
 		Matrix m_normal, m_dot, temp;
-		m_normal.setValue(n, 4, 1);
-		m_dot.setValue(d, 4, 1);
+		m_normal.setValue(_normal, 4, 1);
+		m_dot.setValue(_dot, 4, 1);
 
 		temp = m * m_normal;
 		normal.x = temp.m[0];
