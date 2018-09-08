@@ -129,9 +129,9 @@ void myLookAt(Camera camera)
 
 	float P[16] =
 	{
-		1.0f, 0.0f, 0.0f, -1.0f * camera.pos.x,
-		0.0f, 1.0f, 0.0f, -1.0f * camera.pos.y,
-		0.0f, 0.0f, 1.0f, -1.0f * camera.pos.z,
+		1.0f, 0.0f, 0.0f, -camera.pos.x,
+		0.0f, 1.0f, 0.0f, -camera.pos.y,
+		0.0f, 0.0f, 1.0f, -camera.pos.z,
 		0.0f, 0.0f, 0.0f, 1.0f
 	};
 
@@ -140,17 +140,8 @@ void myLookAt(Camera camera)
 	_P.setValue(P, 4, 4);
 	LookAt = _RUD * _P;
 
-	_RUD.showMatrix();
-	_P.showMatrix();
-	LookAt.showMatrix();
-	system("pause");
-
 	for (int i = 0; i < objects.size(); i++)
-	{
 		objects[i]->matrixMult(LookAt);
-		printf("ok for object #%d\n", i);
-		system("pause");
-	}
 }
 
 void display(void)
