@@ -156,6 +156,7 @@
     <ClCompile Include="VECTOR3D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="gl_helper.h" />
     <ClInclude Include="Init.h" />
     <ClInclude Include="my_utility.h" />
