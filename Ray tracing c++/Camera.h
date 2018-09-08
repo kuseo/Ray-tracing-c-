@@ -18,7 +18,7 @@ public:
 	/*
 	constructor
 	*/
-	Camera() : pos(0.0, 0.0, 0.0), dir(0.0, 0.0, -1.0) { up = VECTOR3D(0.0, 1.0, 0.0); right = VECTOR3D(1.0, 0.0, 0.0); }
+	Camera() : pos(0.0f, 0.0f, 0.0f), dir(0.0f, 0.0f, -1.0f) { up = VECTOR3D(0.0f, 1.0f, 0.0f); right = VECTOR3D(1.0f, 0.0f, 0.0f); }
 
 	/*
 	destructor
