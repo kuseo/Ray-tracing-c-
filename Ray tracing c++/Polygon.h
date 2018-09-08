@@ -83,6 +83,37 @@ public:
 		VECTOR3D edgeAC = c - a;
 		return edgeAB.CrossProduct(edgeAC);
 	}
+
+	virtual void matrixMult(Matrix m)
+	{
+		/*
+		make Homogeneous cooldinates
+		*/
+		float _a[4] = { a.x, a.y, a.z, 1.0f };
+		float _b[4] = { b.x, b.y, b.z, 1.0f };
+		float _c[4] = { c.x, c.y, c.z, 1.0f };
+
+
+		Matrix m_a, m_b, m_c, temp;
+		m_a.setValue(_a, 4, 1);
+		m_b.setValue(_b, 4, 1);
+		m_c.setValue(_c, 4, 1);
+
+		temp = m * m_a;
+		a.x = temp.m[0];
+		a.y = temp.m[1];
+		a.z = temp.m[2];
+
+		temp = m * m_b;
+		b.x = temp.m[0];
+		b.y = temp.m[1];
+		b.z = temp.m[2];
+
+		temp = m * m_c;
+		c.x = temp.m[0];
+		c.y = temp.m[1];
+		c.z = temp.m[2];
+	}
 };
 
 #endif // __POLYGON_H__
