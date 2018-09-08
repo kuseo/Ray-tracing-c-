@@ -33,7 +33,6 @@ Matrix Matrix::operator*(const Matrix & a)
 
 	Matrix output;
 	output.setValue(temp, this->col, a.row);
-	delete(temp);
 
 	return output;
 }
@@ -51,4 +50,14 @@ Matrix Matrix::operator=(const Matrix & a)
 		this->m[i] = a.m[i];
 
 	return *this;
+}
+
+void Matrix::showMatrix()
+{
+	for (int i = 0; i <= col * row; i++)
+	{
+		printf("%lf ", this->m[i]);
+		if ((i + 1) % row == 0)
+			printf("\n");
+	}
 }

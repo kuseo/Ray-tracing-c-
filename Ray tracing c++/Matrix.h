@@ -30,6 +30,7 @@ public:
 	void setValue(float *value, int col, int row);
 	Matrix operator*(const Matrix& a);
 	Matrix operator=(const Matrix& a);
+	void showMatrix();
 };
 
 #endif //__MATRIX_H__
