@@ -62,6 +62,30 @@ public:
 
 	virtual VECTOR3D get_normal(VECTOR3D point) { return normal; }	//don't use
 	virtual VECTOR3D get_normal() { return normal; }
+
+	virtual void matrixMult(Matrix m)
+	{
+		/*
+		make Homogeneous cooldinates
+		*/
+		float n[4] = { normal.x, normal.y, normal.z, 0.0f };
+		float d[4] = { dot.x, dot.y, dot.z, 1.0f };
+
+		Matrix m_normal, m_dot, temp;
+		m_normal.setValue(n, 4, 1);
+		m_dot.setValue(d, 4, 1);
+
+		temp = m * m_normal;
+		normal.x = temp.m[0];
+		normal.y = temp.m[1];
+		normal.z = temp.m[2];
+
+		temp = m * m_dot;
+		dot.x = temp.m[0];
+		dot.y = temp.m[1];
+		dot.z = temp.m[2];
+	}
+
 };
 
 	
