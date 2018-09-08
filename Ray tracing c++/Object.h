@@ -61,7 +61,7 @@ public:
 
 		return k_diffuse * diffuse + k_specular * specular;
 	}
-	virtual void matrixMult(float *m) = 0 {}
+	virtual void matrixMult(float *m) = 0 {}	//multiply 4*4 matrix to object vertices
 
 	/*
 	setter
