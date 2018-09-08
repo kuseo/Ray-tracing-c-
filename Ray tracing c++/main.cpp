@@ -15,6 +15,7 @@
 #include "Sphere.h"
 #include "Plane.h"
 #include "Polygon.h"
+#include "Camera.h"
 #include "Init.h"
 
 #undef near
@@ -29,7 +30,8 @@ GLdouble projMatrix[16];
 GLint viewport[4];
 
 vector<Object*> objects;
-const VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//position of the camera, which is the origin of the ray
+Camera canon;		//Camera
+const VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//origin of the ray in world space
 VECTOR3D light = VECTOR3D(0.0f, 10.0f, -8.0f);		//position of the light
 
 VECTOR3D raytrace(Ray ray, int depth)
@@ -112,6 +114,45 @@ VECTOR3D raytrace(Ray ray, int depth)
 		
 }
 
+void myLookAt(Camera camera)
+{
+	/*
+	calculate LookAt matrix
+	*/
+	float RUD[16] =
+	{
+		camera.right.x, camera.right.y, camera.right.z, 0.0f,
+		camera.up.x, camera.up.y, camera.up.z, 0.0f,
+		camera.dir.x, camera.dir.y, camera.dir.z, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	};
+
+	float P[16] =
+	{
+		1.0f, 0.0f, 0.0f, -1.0f * camera.pos.x,
+		0.0f, 1.0f, 0.0f, -1.0f * camera.pos.y,
+		0.0f, 0.0f, 1.0f, -1.0f * camera.pos.z,
+		0.0f, 0.0f, 0.0f, 1.0f
+	};
+
+	Matrix _RUD, _P, LookAt;
+	_RUD.setValue(RUD, 4, 4);
+	_P.setValue(P, 4, 4);
+	LookAt = _RUD * _P;
+
+	_RUD.showMatrix();
+	_P.showMatrix();
+	LookAt.showMatrix();
+	system("pause");
+
+	for (int i = 0; i < objects.size(); i++)
+	{
+		objects[i]->matrixMult(LookAt);
+		printf("ok for object #%d\n", i);
+		system("pause");
+	}
+}
+
 void display(void)
 {
 	/*
@@ -174,9 +215,8 @@ void reshape(int w, int h)
 	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
 	glGetIntegerv(GL_VIEWPORT, viewport);
 
-	glutPostRedisplay();
+	//glutPostRedisplay();
 }
-
 
 
 void key(unsigned char key, int x, int y)
@@ -226,14 +266,14 @@ int main(int argc, char **argv)
 	scanf("%d", &depth);
 
 	srand(99);
-
+	
 	Initialize(argc, argv);
-
+	
 	vector<VECTOR3D> center;
 	center.resize(3);
-	center[0] = VECTOR3D(2.0, -3.0, -8.0);
-	center[1] = VECTOR3D(-2.0, -3.0, -8.0);
-	center[2] = VECTOR3D(0.0, -3.0, -11.0);
+	center[0] = VECTOR3D(2.0, -2.0, -8.0);
+	center[1] = VECTOR3D(-2.0, -2.0, -8.0);
+	center[2] = VECTOR3D(0.0, -2.0, -11.0);
 	/*
 	create three balls.
 	*/
@@ -267,17 +307,19 @@ int main(int argc, char **argv)
 
 	/*
 	create a polygon
-	*/
 	temp = VECTOR3D(2.0, 2.0, 2.0);
 	for (int i = 0; i < 3; i++)
 	{
-		center[i] += temp;
+	center[i] += temp;
 	}
 	objects.push_back(new Polygon(center[0], center[1], center[2]));
 	objects[objects.size() - 1]->setAmbient(temp);
 	objects[objects.size() - 1]->setDiffuse(temp);
 	objects[objects.size() - 1]->setSpecular(temp);
 	objects[objects.size() - 1]->setShineness(1.0);
+	*/
+	canon.pos.y -= 0.1;
+	myLookAt(canon);
 
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
