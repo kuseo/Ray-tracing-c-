@@ -140,6 +140,8 @@ void myLookAt(Camera camera)
 	_P.setValue(P, 4, 4);
 	LookAt = _RUD * _P;
 
+	LookAt.showMatrix();
+
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->matrixMult(LookAt);
 }
@@ -298,18 +300,16 @@ int main(int argc, char **argv)
 
 	/*
 	create a polygon
+	*/
 	temp = VECTOR3D(2.0, 2.0, 2.0);
 	for (int i = 0; i < 3; i++)
-	{
-	center[i] += temp;
-	}
+		center[i] += temp;
 	objects.push_back(new Polygon(center[0], center[1], center[2]));
 	objects[objects.size() - 1]->setAmbient(temp);
 	objects[objects.size() - 1]->setDiffuse(temp);
 	objects[objects.size() - 1]->setSpecular(temp);
 	objects[objects.size() - 1]->setShineness(1.0);
-	*/
-	canon.pos.y -= 0.1;
+	
 	myLookAt(canon);
 
 	glutReshapeFunc(reshape);
