@@ -153,12 +153,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="VECTOR3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="gl_helper.h" />
     <ClInclude Include="Init.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="my_utility.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Plane.h" />
