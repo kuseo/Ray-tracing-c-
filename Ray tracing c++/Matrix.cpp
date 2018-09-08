@@ -1,16 +1,21 @@
 #include "Matrix.h"
 
-void Matrix::setValue(float * value, int col, int row)
+/*
+	За : row
+	ї­ : column
+*/
+
+void Matrix::setValue(float * value, int row, int col)
 {
-	this->col = col;
 	this->row = row;
+	this->col = col;
 
 	if (this->m)
 		delete(this->m);
 
-	this->m = new float[col * row];
+	this->m = new float[row * col];
 
-	for (int i = 0; i < col * row; i++)
+	for (int i = 0; i < row * col; i++)
 		this->m[i] = value[i];
 }
 
@@ -32,6 +37,7 @@ Matrix Matrix::operator*(const Matrix & a)
 				temp[i * a.col + j] += this->m[i * this->col + k] * a.m[k * a.col + j];
 
 	Matrix output;
+	output.setValue(temp, a.col, this->row);
 
 	delete(temp);
 	return output;
@@ -43,7 +49,7 @@ Matrix Matrix::operator=(const Matrix & a)
 	this->row = a.row;
 
 	if (this->m)
-		delete(m);
+		delete(this->m);
 
 	this->m = new float[a.col * a.row];
 	for (int i = 0; i < a.col * a.row; i++)
