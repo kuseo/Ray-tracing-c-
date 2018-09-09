@@ -37,7 +37,7 @@ Matrix Matrix::operator*(const Matrix & a)
 				temp[i * a.col + j] += this->m[i * this->col + k] * a.m[k * a.col + j];
 
 	Matrix output;
-	output.setValue(temp, a.col, this->row);
+	output.setValue(temp, this->row, a.col);
 
 	delete(temp);
 	return output;
