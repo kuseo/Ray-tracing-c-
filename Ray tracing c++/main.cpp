@@ -140,8 +140,6 @@ void myLookAt(Camera camera)
 	_P.setValue(P, 4, 4);
 	LookAt = _RUD * _P;
 
-	LookAt.showMatrix();
-
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->matrixMult(LookAt);
 }
@@ -199,7 +197,7 @@ void reshape(int w, int h)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-1.0 * wfactor, 1.0 * wfactor, -1.0 * hfactor, 1.0 * hfactor, 1.0, -1.0);
+	glOrtho(-1.0 * wfactor, 1.0 * wfactor, -1.0 * hfactor, 1.0 * hfactor, -1.0, 1.0);
 
 	/*
 	get matrices
