@@ -72,11 +72,11 @@ public:
 		m_normal = VectorToMatrix(normal, 0.0f);
 		m_dot = VectorToMatrix(dot, 1.0f);
 
-		temp = m * m_normal;
-		normal = MatrixToVector(temp);
+		m_normal = m * m_normal;
+		normal = MatrixToVector(m_normal);
 
-		temp = m * m_dot;
-		dot = MatrixToVector(temp);
+		m_dot = m * m_dot;
+		dot = MatrixToVector(m_dot);
 	}
 
 };

@@ -94,19 +94,19 @@ public:
 		float _c[4] = { c.x, c.y, c.z, 1.0f };
 
 
-		Matrix m_a, m_b, m_c, temp;
+		Matrix m_a, m_b, m_c;
 		m_a = VectorToMatrix(a, 1.0f);
 		m_b = VectorToMatrix(b, 1.0f);
 		m_c = VectorToMatrix(c, 1.0f);
 
-		temp = m * m_a;
-		a = MatrixToVector(temp);
+		m_a = m * m_a;
+		a = MatrixToVector(m_a);
 
-		temp = m * m_b;
-		b = MatrixToVector(temp);
+		m_b = m * m_b;
+		b = MatrixToVector(m_b);
 
-		temp = m * m_c;
-		c = MatrixToVector(temp);
+		m_c = m * m_c;
+		c = MatrixToVector(m_c);
 	}
 };
 

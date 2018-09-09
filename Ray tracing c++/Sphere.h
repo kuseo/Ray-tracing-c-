@@ -87,11 +87,11 @@ public:
 		/*
 		make Homogeneous cooldinates
 		*/
-		Matrix m_cen, temp;
+		Matrix m_cen;
 		m_cen = VectorToMatrix(cen, 1.0f);
 
-		temp = m * m_cen;
-		cen = MatrixToVector(temp);
+		m_cen = m * m_cen;
+		cen = MatrixToVector(m_cen);
 	}
 };
 
