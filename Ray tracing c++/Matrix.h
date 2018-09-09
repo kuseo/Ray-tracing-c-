@@ -22,7 +22,7 @@ public:
 	/*
 	destructor
 	*/
-	~Matrix() {}
+	~Matrix() { delete(m); }
 
 	/*
 	member function
