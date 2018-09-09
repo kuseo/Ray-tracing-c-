@@ -87,15 +87,11 @@ public:
 		/*
 		make Homogeneous cooldinates
 		*/
-		float _cen[4] = { cen.x, cen.y, cen.z, 1.0f };
-
 		Matrix m_cen, temp;
-		m_cen.setValue(_cen, 4, 1);
+		m_cen = VectorToMatrix(cen, 1.0f);
 
 		temp = m * m_cen;
-		cen.x = temp.m[0];
-		cen.y = temp.m[1];
-		cen.z = temp.m[2];
+		cen = MatrixToVector(temp);
 	}
 };
 

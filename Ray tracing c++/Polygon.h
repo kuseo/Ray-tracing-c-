@@ -95,24 +95,18 @@ public:
 
 
 		Matrix m_a, m_b, m_c, temp;
-		m_a.setValue(_a, 4, 1);
-		m_b.setValue(_b, 4, 1);
-		m_c.setValue(_c, 4, 1);
+		m_a = VectorToMatrix(a, 1.0f);
+		m_b = VectorToMatrix(b, 1.0f);
+		m_c = VectorToMatrix(c, 1.0f);
 
 		temp = m * m_a;
-		a.x = temp.m[0];
-		a.y = temp.m[1];
-		a.z = temp.m[2];
+		a = MatrixToVector(temp);
 
 		temp = m * m_b;
-		b.x = temp.m[0];
-		b.y = temp.m[1];
-		b.z = temp.m[2];
+		b = MatrixToVector(temp);
 
 		temp = m * m_c;
-		c.x = temp.m[0];
-		c.y = temp.m[1];
-		c.z = temp.m[2];
+		c = MatrixToVector(temp);
 	}
 };
 

@@ -68,22 +68,15 @@ public:
 		/*
 		make Homogeneous cooldinates
 		*/
-		float _normal[4] = { normal.x, normal.y, normal.z, 0.0f };
-		float _dot[4] = { dot.x, dot.y, dot.z, 1.0f };
-
 		Matrix m_normal, m_dot, temp;
-		m_normal.setValue(_normal, 4, 1);
-		m_dot.setValue(_dot, 4, 1);
+		m_normal = VectorToMatrix(normal, 0.0f);
+		m_dot = VectorToMatrix(dot, 1.0f);
 
 		temp = m * m_normal;
-		normal.x = temp.m[0];
-		normal.y = temp.m[1];
-		normal.z = temp.m[2];
+		normal = MatrixToVector(temp);
 
 		temp = m * m_dot;
-		dot.x = temp.m[0];
-		dot.y = temp.m[1];
-		dot.z = temp.m[2];
+		dot = MatrixToVector(temp);
 	}
 
 };
