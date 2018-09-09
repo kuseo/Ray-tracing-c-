@@ -27,7 +27,7 @@ public:
 	/*
 	member function
 	*/
-	void setValue(float *value, int col, int row);
+	void setValue(float *value, int row, int col);
 	Matrix operator*(const Matrix& a);
 	Matrix operator=(const Matrix& a);
 	void showMatrix();

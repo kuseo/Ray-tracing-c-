@@ -63,7 +63,7 @@ void Matrix::showMatrix()
 	for (int i = 0; i < col * row; i++)
 	{
 		printf("%lf ", this->m[i]);
-		if ((i + 1) % row == 0)
+		if ((i + 1) % col == 0)
 			printf("\n");
 	}
 	printf("\n");
