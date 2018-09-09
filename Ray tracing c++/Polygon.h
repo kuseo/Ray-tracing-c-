@@ -89,11 +89,6 @@ public:
 		/*
 		make Homogeneous cooldinates
 		*/
-		float _a[4] = { a.x, a.y, a.z, 1.0f };
-		float _b[4] = { b.x, b.y, b.z, 1.0f };
-		float _c[4] = { c.x, c.y, c.z, 1.0f };
-
-
 		Matrix m_a, m_b, m_c;
 		m_a = VectorToMatrix(a, 1.0f);
 		m_b = VectorToMatrix(b, 1.0f);
