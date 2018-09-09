@@ -33,7 +33,7 @@ VECTOR3D MatrixToVector(const Matrix& source)
 	return result;
 }
 
-Matrix VectorToMatrix(const VECTOR3D& source, int Homogeneous)
+Matrix VectorToMatrix(const VECTOR3D& source, float Homogeneous)
 {
 	Matrix result;
 	float temp[4] = { source.x, source.y, source.z, Homogeneous };
