@@ -3,6 +3,7 @@
 
 #include "Matrix.h"
 #include "Ray.h"
+#include "my_utility.h"
 
 class Object
 {
