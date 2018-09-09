@@ -140,8 +140,15 @@ void myLookAt(Camera camera)
 	_P.setValue(P, 4, 4);
 	LookAt = _RUD * _P;
 
+	/*
+	transform all objects and lights to camera world
+	*/
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->matrixMult(LookAt);
+
+	Matrix m_light = VectorToMatrix(light, 1.0f);
+	m_light = LookAt * m_light;
+	light = MatrixToVector(m_light);
 }
 
 void display(void)
