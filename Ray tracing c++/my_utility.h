@@ -20,7 +20,7 @@ VECTOR3D randomVector()
 
 void printVector(VECTOR3D v)
 {
-	printf("(%lf, %lf, %lf)\n", v.x, v.y, v.z);
+	printf("(%lf, %lf, %lf)\n\n", v.x, v.y, v.z);
 }
 
 VECTOR3D MatrixToVector(const Matrix& source)
