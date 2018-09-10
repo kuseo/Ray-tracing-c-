@@ -279,6 +279,9 @@ int main(int argc, char **argv)
 	
 	Initialize(argc, argv);
 	
+	/**********************
+	Load or Create objects
+	**********************/
 	vector<VECTOR3D> center;
 	center.resize(3);
 	center[0] = VECTOR3D(2.0, -2.0, -8.0);
@@ -327,6 +330,8 @@ int main(int argc, char **argv)
 	objects[objects.size() - 1]->setSpecular(temp);
 	objects[objects.size() - 1]->setShineness(1.0);
 	
+
+
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
 	glutKeyboardFunc(key);
