@@ -157,7 +157,8 @@ void display(void)
 	draw
 	*/
 	glClear(GL_COLOR_BUFFER_BIT);
-	
+	myLookAt(canon);
+
 	glBegin(GL_POINTS);
 	for (int i = 0; i < glutGet(GLUT_WINDOW_WIDTH); i++)
 		for (int j = 1; j <= glutGet(GLUT_WINDOW_HEIGHT); j++)
@@ -315,8 +316,6 @@ int main(int argc, char **argv)
 	objects[objects.size() - 1]->setSpecular(temp);
 	objects[objects.size() - 1]->setShineness(1.0);
 	
-	myLookAt(canon);
-
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
 	glutKeyboardFunc(key);
