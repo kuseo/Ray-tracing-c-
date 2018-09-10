@@ -25,14 +25,19 @@ using namespace std;
 
 int depth = 0;
 
+/*
+openGL view matrix
+*/
 GLdouble modelMatrix[16];
 GLdouble projMatrix[16];
 GLint viewport[4];
 
-vector<Object*> objects;
-Camera canon;		//Camera
-const VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//origin of the ray in world space
+vector<Object*> objects;		//obejets
 VECTOR3D light = VECTOR3D(0.0f, 10.0f, -8.0f);		//position of the light
+Camera canon;		//Camera
+vector<Object*> Buffer;		//buffer objects
+
+const VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//origin of the ray in world space
 float deltaTime = 0.0f;		//time between current and last frame
 float lastTime = 0.0f;		//time of last frame
 
@@ -158,6 +163,16 @@ void myLookAt(Camera camera)
 
 void display(void)
 {
+	/*
+	copy objects vector to Buffer
+	*/
+	Buffer.resize(objects.size());
+	for (int i = 0; i < objects.size(); i++)
+	{
+		
+	}
+
+
 	/*
 	draw
 	*/
@@ -304,7 +319,6 @@ int main(int argc, char **argv)
 		if (index == 3)
 			break;
 	}
-	
 
 	/*
 	create infinite plane
