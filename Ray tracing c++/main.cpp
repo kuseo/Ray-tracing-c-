@@ -33,6 +33,8 @@ vector<Object*> objects;
 Camera canon;		//Camera
 const VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//origin of the ray in world space
 VECTOR3D light = VECTOR3D(0.0f, 10.0f, -8.0f);		//position of the light
+float deltaTime = 0.0f;		//time between current and last frame
+float lastTime = 0.0f;		//time of last frame
 
 VECTOR3D raytrace(Ray ray, int depth)
 {
@@ -119,6 +121,9 @@ void myLookAt(Camera camera)
 	/*
 	calculate LookAt matrix
 	*/
+	camera.right.Normalize();
+	camera.up.Normalize();
+	camera.dir.Normalize();
 	float RUD[16] =
 	{
 		camera.right.x, camera.right.y, camera.right.z, 0.0f,
@@ -156,9 +161,9 @@ void display(void)
 	/*
 	draw
 	*/
-	glClear(GL_COLOR_BUFFER_BIT);
 	myLookAt(canon);
 
+	glClear(GL_COLOR_BUFFER_BIT);
 	glBegin(GL_POINTS);
 	for (int i = 0; i < glutGet(GLUT_WINDOW_WIDTH); i++)
 		for (int j = 1; j <= glutGet(GLUT_WINDOW_HEIGHT); j++)
@@ -194,6 +199,7 @@ void display(void)
 		}
 
 	glutSwapBuffers();
+	glutPostRedisplay();
 }
 
 void reshape(int w, int h)
@@ -214,7 +220,7 @@ void reshape(int w, int h)
 	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
 	glGetIntegerv(GL_VIEWPORT, viewport);
 
-	//glutPostRedisplay();
+	glutPostRedisplay();
 }
 
 
@@ -229,17 +235,22 @@ void key(unsigned char key, int x, int y)
 		exit(0);
 	case 'w':
 	case 'W':
+		canon.pos.y += 0.1f;
 		break;
 	case 'a':
 	case 'A':
+		canon.pos.x -= 0.1f;
 		break;
 	case 's':
 	case 'S':
+		canon.pos.y -= 0.1f;
 		break;
 	case 'd':
 	case 'D':
+		canon.pos.x += 0.1f;
 		break;
 	}
+
 	glutPostRedisplay();
 }
 

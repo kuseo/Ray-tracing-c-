@@ -13,12 +13,13 @@ public:
 	VECTOR3D dir;
 	VECTOR3D up;
 	VECTOR3D right;
+	float speed;
 	float fov;
 
 	/*
 	constructor
 	*/
-	Camera() : pos(0.0f, 0.0f, 0.0f), dir(0.0f, 0.0f, -1.0f), up(0.0f, 1.0f, 0.0f), right(1.0f, 0.0f, 0.0f) { }
+	Camera() : pos(0.0f, 0.0f, 0.0f), dir(0.0f, 0.0f, -1.0f), up(0.0f, 1.0f, 0.0f), right(1.0f, 0.0f, 0.0f), speed(1.0f) { }
 
 	/*
 	destructor
