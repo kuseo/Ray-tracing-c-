@@ -53,10 +53,10 @@ VECTOR3D raytrace(Ray ray, int depth)
 	/*
 	find the first object that collides with ray
 	*/
-	for (int i = 0; i < objects.size(); i++)
+	for (int i = 0; i < Buffer.size(); i++)
 	{
 		float t;
-		Object *obj = objects[i];
+		Object *obj = Buffer[i];
 
 		if (obj->hit(ray, &t))
 		{
@@ -85,10 +85,10 @@ VECTOR3D raytrace(Ray ray, int depth)
 
 	Ray shadow_ray(point, L);
 
-	for (int i = 0; i < objects.size(); i++)
+	for (int i = 0; i < Buffer.size(); i++)
 	{
 		float t;
-		Object *obj = objects[i];
+		Object *obj = Buffer[i];
 
 		if (obj->hit(shadow_ray, &t))
 			if (t <= min_st)
@@ -153,8 +153,8 @@ void myLookAt(Camera camera)
 	/*
 	transform all objects and lights to camera world
 	*/
-	for (int i = 0; i < objects.size(); i++)
-		objects[i]->matrixMult(LookAt);
+	for (int i = 0; i < Buffer.size(); i++)
+		Buffer[i]->matrixMult(LookAt);
 
 	Matrix m_light = VectorToMatrix(light, 1.0f);
 	m_light = LookAt * m_light;
@@ -164,14 +164,24 @@ void myLookAt(Camera camera)
 void display(void)
 {
 	/*
+	clear buffer
+	*/
+
+
+	/*
 	copy objects vector to Buffer
 	*/
 	Buffer.resize(objects.size());
 	for (int i = 0; i < objects.size(); i++)
 	{
-		
+		Buffer[i] = (Object*)malloc(sizeof(*objects[i]));
+		*Buffer[i] = *objects[i];
 	}
-
+	for (int i = 0; i < objects.size(); i++)
+	{
+		printf("%d\n", sizeof(*objects[i]));
+	}
+	system("pause");
 
 	/*
 	draw
@@ -309,7 +319,6 @@ int main(int argc, char **argv)
 	while (true)
 	{
 		objects.push_back(new Sphere(center[index], 2.0));
-		objects[objects.size() - 1] = new Sphere(center[index], 2.0);
 		objects[objects.size() - 1]->setAmbient(randomVector());
 		objects[objects.size() - 1]->setDiffuse(randomVector());
 		objects[objects.size() - 1]->setSpecular(randomVector());
