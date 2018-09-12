@@ -19,7 +19,7 @@ public:
 	/*
 	constructor
 	*/
-	Camera() : pos(0.0f, 0.0f, 0.0f), dir(0.0f, 0.0f, -1.0f), up(0.0f, 1.0f, 0.0f), right(1.0f, 0.0f, 0.0f), speed(1.0f) { }
+	Camera() : pos(0.0f, 0.0f, 0.0f), dir(0.0f, 0.0f, -1.0f), up(0.0f, 1.0f, 0.0f), right(1.0f, 0.0f, 0.0f), speed(2.0f) { }
 
 	/*
 	destructor
