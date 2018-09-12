@@ -39,7 +39,7 @@ vector<Object*> Buffer;		//buffer objects
 
 const VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//origin of the ray in world space
 float deltaTime = 0.0f;		//time between current and last frame
-float lastTime = 0.0f;		//time of last frame
+float lastFrame = 0.0f;		//time of last frame
 
 VECTOR3D raytrace(Ray ray, int depth)
 {
@@ -162,6 +162,10 @@ void myLookAt(Camera camera)
 
 void display(void)
 {
+	float currentFrame = glutGet(GLUT_ELAPSED_TIME);
+	deltaTime = currentFrame - lastFrame;
+	lastFrame = currentFrame;
+
 	/*
 	clear buffer
 	*/
@@ -259,28 +263,27 @@ void reshape(int w, int h)
 
 void key(unsigned char key, int x, int y)
 {
-	/*
-	ESC 키로 어플리케이션 종료
-	*/
+	float cameraSpeed = canon.speed * deltaTime;
+
 	switch (key)
 	{
 	case 27:
-		exit(0);
+		exit(0); //terminate program with ESC key
 	case 'w':
 	case 'W':
-		canon.pos.y += 0.1f;
+		canon.pos += canon.dir * cameraSpeed;
 		break;
 	case 'a':
 	case 'A':
-		canon.pos.x -= 0.1f;
+		canon.pos += canon.right * -cameraSpeed;
 		break;
 	case 's':
 	case 'S':
-		canon.pos.y -= 0.1f;
+		canon.pos += canon.dir * -cameraSpeed;
 		break;
 	case 'd':
 	case 'D':
-		canon.pos.x += 0.1f;
+		canon.pos += canon.right * cameraSpeed;
 		break;
 	}
 
