@@ -118,7 +118,6 @@ VECTOR3D raytrace(Ray ray, int depth)
 		
 	else
 		return o->k_ambient + o->getColor(point, light, ray.origin) * shadow;
-		
 }
 
 void myLookAt(Camera camera)
@@ -166,22 +165,30 @@ void display(void)
 	/*
 	clear buffer
 	*/
-
+	for (int i = 0; i < Buffer.size(); i++)
+		delete(Buffer[i]);
+	Buffer.clear();
 
 	/*
-	copy objects vector to Buffer
+	copy objects to Buffer
 	*/
 	Buffer.resize(objects.size());
 	for (int i = 0; i < objects.size(); i++)
 	{
-		Buffer[i] = (Object*)malloc(sizeof(*objects[i]));
-		*Buffer[i] = *objects[i];
+		switch (objects[i]->getClassType())
+		{
+		case PLANE:
+			Buffer[i] = new Plane();
+			break;
+		case POLYGON:
+			Buffer[i] = new Polygon();
+			break;
+		case SPHERE:
+			Buffer[i] = new Sphere();
+			break;
+		}
+		Buffer[i] = objects[i]->clone();
 	}
-	for (int i = 0; i < objects.size(); i++)
-	{
-		printf("%d\n", sizeof(*objects[i]));
-	}
-	system("pause");
 
 	/*
 	draw
