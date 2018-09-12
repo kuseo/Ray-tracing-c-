@@ -188,6 +188,7 @@ void display(void)
 			break;
 		}
 		Buffer[i] = objects[i]->clone();
+		*Buffer[i] = *objects[i];
 	}
 
 	/*
