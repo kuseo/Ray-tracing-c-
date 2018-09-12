@@ -5,6 +5,8 @@
 #include "Ray.h"
 #include "my_utility.h"
 
+enum { PLANE, POLYGON, SPHERE };
+
 class Object
 {
 public:
@@ -64,6 +66,7 @@ public:
 		return k_diffuse * diffuse + k_specular * specular;
 	}
 	virtual void matrixMult(Matrix m) = 0 {}	//multiply 4*4 matrix to object vertices
+	virtual int getClassType() = 0 {}
 
 	/*
 	setter
