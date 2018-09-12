@@ -67,6 +67,8 @@ public:
 	}
 	virtual void matrixMult(Matrix m) = 0 {}	//multiply 4*4 matrix to object vertices
 	virtual int getClassType() = 0 {}
+	virtual Object* doClone() const = 0 {}
+	virtual Object* clone() const { return doClone(); }
 
 	/*
 	setter

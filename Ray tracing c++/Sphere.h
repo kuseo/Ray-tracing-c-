@@ -17,7 +17,8 @@ public:
 	constructor
 	*/
 	Sphere() {}
-	Sphere(VECTOR3D cen, float rad) : cen(cen), rad(rad) { }
+	Sphere(VECTOR3D cen, float rad) : cen(cen), rad(rad) {}
+	Sphere(const Sphere& S) : cen(S.cen), rad(S.rad) {}
 
 	/*
 	destructor
@@ -95,6 +96,10 @@ public:
 	}
 
 	virtual int getClassType() { return SPHERE; }
+
+	virtual Sphere* doClone() const { return new Sphere(*this); }
+
+	Sphere* clone() const { return doClone(); }
 };
 
 #endif //__SPEHERE_H__

@@ -18,6 +18,7 @@ public:
 	*/
 	Plane() {}
 	Plane(VECTOR3D normal, VECTOR3D dot) : normal(normal), dot(dot) {}
+	Plane(const Plane& P) : normal(P.normal), dot(P.dot) {}
 
 	/*
 	destructor
@@ -80,6 +81,10 @@ public:
 	}
 
 	virtual int getClassType() { return PLANE; }
+
+	virtual Plane* doClone() const { return new Plane(*this); }
+
+	Plane* clone() const { return doClone(); }
 };
 
 	

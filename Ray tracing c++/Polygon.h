@@ -16,8 +16,8 @@ public:
 		constructor
 	*/
 	Polygon() {}
-	Polygon(VECTOR3D a, VECTOR3D b, VECTOR3D c) :
-		a(a), b(b), c(c) {}
+	Polygon(VECTOR3D a, VECTOR3D b, VECTOR3D c) : a(a), b(b), c(c) {}
+	Polygon(const Polygon& P) : a(P.a), b(P.b), c(P.c) {}
 
 	/*
 	destructor
@@ -105,6 +105,10 @@ public:
 	}
 
 	virtual int getClassType() { return POLYGON; }
+
+	virtual Polygon* doClone() const { return new Polygon(*this); }
+
+	Polygon* clone() const { return doClone(); }
 };
 
 #endif // __POLYGON_H__
