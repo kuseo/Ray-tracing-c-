@@ -93,6 +93,8 @@ public:
 		m_cen = m * m_cen;
 		cen = MatrixToVector(m_cen);
 	}
+
+	virtual int getClassType() { return SPHERE; }
 };
 
 #endif //__SPEHERE_H__

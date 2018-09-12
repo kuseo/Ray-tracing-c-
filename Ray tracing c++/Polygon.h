@@ -103,6 +103,8 @@ public:
 		m_c = m * m_c;
 		c = MatrixToVector(m_c);
 	}
+
+	virtual int getClassType() { return POLYGON; }
 };
 
 #endif // __POLYGON_H__

@@ -79,6 +79,7 @@ public:
 		dot = MatrixToVector(m_dot);
 	}
 
+	virtual int getClassType() { return PLANE; }
 };
 
 	
