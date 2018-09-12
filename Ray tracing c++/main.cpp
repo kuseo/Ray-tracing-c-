@@ -35,7 +35,9 @@ GLint viewport[4];
 vector<Object*> objects;		//obejets
 VECTOR3D light = VECTOR3D(0.0f, 10.0f, -8.0f);		//position of the light
 Camera canon;		//Camera
+
 vector<Object*> Buffer;		//buffer objects
+VECTOR3D lightBuffer;
 
 const VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//origin of the ray in world space
 float deltaTime = 0.0f;		//time between current and last frame
@@ -155,9 +157,9 @@ void myLookAt(Camera camera)
 	for (int i = 0; i < Buffer.size(); i++)
 		Buffer[i]->matrixMult(LookAt);
 
-	Matrix m_light = VectorToMatrix(light, 1.0f);
+	Matrix m_light = VectorToMatrix(lightBuffer, 1.0f);
 	m_light = LookAt * m_light;
-	light = MatrixToVector(m_light);
+	lightBuffer = MatrixToVector(m_light);
 }
 
 void display(void)
@@ -194,6 +196,7 @@ void display(void)
 		Buffer[i] = objects[i]->clone();
 		*Buffer[i] = *objects[i];
 	}
+	lightBuffer = light;
 
 	/*
 	draw
