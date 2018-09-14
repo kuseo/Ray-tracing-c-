@@ -61,8 +61,7 @@ public:
 		}
 	}
 
-	virtual VECTOR3D get_normal(VECTOR3D point) { return normal; }	//don't use
-	virtual VECTOR3D get_normal() { return normal; }
+	virtual VECTOR3D get_normal(VECTOR3D point) { return normal; }
 
 	virtual void matrixMult(Matrix m)
 	{

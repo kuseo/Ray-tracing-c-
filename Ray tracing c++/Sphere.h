@@ -81,7 +81,6 @@ public:
 	}
 
 	virtual VECTOR3D get_normal(VECTOR3D point) { return point - cen; }
-	virtual VECTOR3D get_normal() { return VECTOR3D(0.0, 0.0, 0.0); }	//don't use
 
 	virtual void matrixMult(Matrix m)
 	{

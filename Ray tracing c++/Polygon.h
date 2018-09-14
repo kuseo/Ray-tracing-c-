@@ -75,10 +75,8 @@ public:
 		}
 	}
 
-	virtual VECTOR3D get_normal(VECTOR3D point) { return VECTOR3D(0.0, 0.0, 0.0); }	//don't use
-
-	virtual VECTOR3D get_normal()
-	{
+	virtual VECTOR3D get_normal(VECTOR3D point) 
+	{ 
 		VECTOR3D edgeAB = b - a;
 		VECTOR3D edgeAC = c - a;
 		return edgeAB.CrossProduct(edgeAC);
