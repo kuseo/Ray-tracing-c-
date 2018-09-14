@@ -33,8 +33,8 @@ GLdouble projMatrix[16];
 GLint viewport[4];
 
 vector<Object*> objects;		//obejets
-VECTOR3D light = VECTOR3D(0.0f, 10.0f, -8.0f);		//position of the light
-Camera canon;		//Camera
+VECTOR3D light = VECTOR3D(00.0f, 10.0f, 10.0f);		//position of the light
+Camera canon = Camera(0.0, 10.0, 10.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0);		//Camera
 
 vector<Object*> Buffer;		//buffer objects
 VECTOR3D lightBuffer;
@@ -126,6 +126,7 @@ void myLookAt(Camera camera)
 {
 	/*
 	calculate LookAt matrix
+	transform into camera space
 	*/
 	camera.right.Normalize();
 	camera.up.Normalize();
@@ -146,10 +147,10 @@ void myLookAt(Camera camera)
 		0.0f, 0.0f, 0.0f, 1.0f
 	};
 
-	Matrix _RUD, _P, LookAt;
-	_RUD.setValue(RUD, 4, 4);
-	_P.setValue(P, 4, 4);
-	LookAt = _RUD * _P;
+	Matrix m_RUD, m_P, LookAt;
+	m_RUD.setValue(RUD, 4, 4);
+	m_P.setValue(P, 4, 4);
+	LookAt = m_RUD * m_P;
 
 	/*
 	transform all objects and lights to camera world
@@ -157,17 +158,17 @@ void myLookAt(Camera camera)
 	for (int i = 0; i < Buffer.size(); i++)
 		Buffer[i]->matrixMult(LookAt);
 
-	Matrix m_light = VectorToMatrix(lightBuffer, 1.0f);
+	Matrix m_light = VectorToMatrix(lightBuffer, 0.0f);
 	m_light = LookAt * m_light;
 	lightBuffer = MatrixToVector(m_light);
 }
 
 void display(void)
 {
-	float currentFrame = glutGet(GLUT_ELAPSED_TIME);
+	int currentFrame = glutGet(GLUT_ELAPSED_TIME);
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
-
+	printf("%d\n", currentFrame);
 	/*
 	clear buffer
 	*/
@@ -289,7 +290,7 @@ void key(unsigned char key, int x, int y)
 		canon.pos += canon.right * cameraSpeed;
 		break;
 	}
-
+	printVector(canon.pos);
 	glutPostRedisplay();
 }
 
@@ -323,9 +324,9 @@ int main(int argc, char **argv)
 	**********************/
 	vector<VECTOR3D> center;
 	center.resize(3);
-	center[0] = VECTOR3D(2.0, -2.0, -8.0);
-	center[1] = VECTOR3D(-2.0, -2.0, -8.0);
-	center[2] = VECTOR3D(0.0, -2.0, -11.0);
+	center[0] = VECTOR3D(2.0, 2.0, 2.0);
+	center[1] = VECTOR3D(-2.0, 2.0, 2.0);
+	center[2] = VECTOR3D(0.0, 2.0, -2.0);
 	/*
 	create three balls.
 	*/
@@ -347,7 +348,7 @@ int main(int argc, char **argv)
 	create infinite plane
 	*/
 	VECTOR3D plane_normal = VECTOR3D(0.0, 1.0, 0.0);
-	VECTOR3D plane_dot = VECTOR3D(0.0, -5.0, 0.0);
+	VECTOR3D plane_dot = VECTOR3D(0.0, 0.0, 0.0);
 	VECTOR3D temp = VECTOR3D(0.3, 0.3, 0.3);
 	objects.push_back(new Plane(plane_normal, plane_dot));
 	objects[objects.size() - 1]->setAmbient(temp);
@@ -357,15 +358,16 @@ int main(int argc, char **argv)
 
 	/*
 	create a polygon
-	*/
 	temp = VECTOR3D(2.0, 2.0, 2.0);
 	for (int i = 0; i < 3; i++)
-		center[i] += temp;
+	center[i] += temp;
 	objects.push_back(new Polygon(center[0], center[1], center[2]));
 	objects[objects.size() - 1]->setAmbient(temp);
 	objects[objects.size() - 1]->setDiffuse(temp);
 	objects[objects.size() - 1]->setSpecular(temp);
 	objects[objects.size() - 1]->setShineness(1.0);
+	*/
+	
 	
 
 
