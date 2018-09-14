@@ -35,7 +35,7 @@ GLint viewport[4];
 
 vector<Object*> objects;		//obejets
 VECTOR3D light = VECTOR3D(00.0f, 10.0f, 10.0f);		//position of the light
-Camera canon = Camera(0.0, 10.0, 10.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 2.0f);		//Camera
+Camera canon = Camera(0.0, 10.0, 10.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 1.0f);		//Camera
 
 vector<Object*> Buffer;		//buffer objects
 VECTOR3D lightBuffer;
@@ -296,8 +296,7 @@ void key(unsigned char key, int x, int y)
 		canon.pos += canon.right * cameraSpeed;
 		break;
 	}
-	printVector(canon.pos);
-	printf("%lf\n", cameraSpeed);
+
 	glutPostRedisplay();
 }
 
