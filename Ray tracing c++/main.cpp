@@ -34,7 +34,7 @@ GLdouble projMatrix[16];
 GLint viewport[4];
 
 vector<Object*> objects;		//obejets
-VECTOR3D light = VECTOR3D(00.0f, 10.0f, 10.0f);		//position of the light
+VECTOR3D light = VECTOR3D(0.0f, 10.0f, 0.0f);		//position of the light
 Camera canon = Camera(0.0, 10.0, 10.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 1.0f);		//Camera
 
 vector<Object*> Buffer;		//buffer objects
@@ -117,8 +117,8 @@ VECTOR3D raytrace(Ray ray, int depth)
 	
 	if (depth > 0)
 		return o->k_ambient + (o->getColor(point, light, ray.origin)) * shadow
-			+ raytrace(Ray(point, Reflection), depth - 1) * 0.3f
-			+ raytrace(Ray(point, ray.dir), depth - 1) * 0.1f;
+		+ raytrace(Ray(point, Reflection), depth - 1) * (o->f_reflection)
+		+ raytrace(Ray(point, ray.dir), depth - 1) * (o->f_refraction);
 		
 	else
 		return o->k_ambient + o->getColor(point, light, ray.origin) * shadow;
@@ -344,6 +344,8 @@ int main(int argc, char **argv)
 		objects[objects.size() - 1]->setDiffuse(randomVector());
 		objects[objects.size() - 1]->setSpecular(randomVector());
 		objects[objects.size() - 1]->setShineness(32.0);
+		objects[objects.size() - 1]->setReflectionFactor(0.8f);
+		objects[objects.size() - 1]->setRefractionFactor(0.0f);
 		index++;
 
 		if (index == 3)
@@ -361,6 +363,8 @@ int main(int argc, char **argv)
 	objects[objects.size() - 1]->setDiffuse(temp);
 	objects[objects.size() - 1]->setSpecular(temp);
 	objects[objects.size() - 1]->setShineness(1.0);
+	objects[objects.size() - 1]->setReflectionFactor(0.0f);
+	objects[objects.size() - 1]->setRefractionFactor(0.0f);
 
 	/*
 	create a polygon
