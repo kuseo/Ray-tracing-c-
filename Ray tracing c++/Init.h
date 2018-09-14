@@ -2,7 +2,7 @@
 #define __INIT_H__
 
 #include "gl_helper.h"
-#define DIM 500
+#define DIM 800
 
 void Initialize(int argc, char **argv)
 {
