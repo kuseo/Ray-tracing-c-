@@ -3,7 +3,6 @@
 
 #include "Matrix.h"
 #include "Ray.h"
-#include "my_utility.h"
 
 enum { PLANE, POLYGON, SPHERE };
 
