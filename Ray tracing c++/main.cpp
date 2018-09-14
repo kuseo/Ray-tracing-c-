@@ -269,7 +269,6 @@ void reshape(int w, int h)
 	glutPostRedisplay();
 }
 
-
 void key(unsigned char key, int x, int y)
 {
 	float _deltatime = deltaTime / CLOCKS_PER_SEC;
@@ -316,12 +315,17 @@ void arrowkey(int key, int x, int y)
 	glutPostRedisplay();
 }
 
+void mouse(int button, int state, int x, int y)
+{
+
+}
+
 int main(int argc, char **argv)
 {
 	printf("depth : ");
 	scanf("%d", &depth);
 
-	srand(99);
+	srand(90);
 	
 	Initialize(argc, argv);
 	
@@ -370,7 +374,7 @@ int main(int argc, char **argv)
 	create a polygon
 	*/
 	temp = VECTOR3D(2.0, -1.9, 2.0);
-	VECTOR3D non(1.0f,0.0f,0.0f);
+	VECTOR3D non(.2f,.0f,.0f);
 	for (int i = 0; i < 3; i++)
 	center[i] += temp;
 	objects.push_back(new Polygon(center[0], center[1], center[2]));
@@ -378,15 +382,15 @@ int main(int argc, char **argv)
 	objects[objects.size() - 1]->setDiffuse(non);
 	objects[objects.size() - 1]->setSpecular(non);
 	objects[objects.size() - 1]->setShineness(1.0);
-	objects[objects.size() - 1]->setReflectionFactor(0.5f);
+	objects[objects.size() - 1]->setReflectionFactor(1.0f);
 	objects[objects.size() - 1]->setRefractionFactor(0.0f);
 	
 	
-	
-	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
+	glutReshapeFunc(reshape);
 	glutKeyboardFunc(key);
 	glutSpecialFunc(arrowkey);
+	glutMouseFunc(mouse);
 	glutMainLoop();
 	return 0;             /* ANSI C requires main to return int. */
 }
