@@ -42,8 +42,17 @@ VECTOR3D lightBuffer;
 
 const VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//origin of the ray in world space
 
-float deltaTime = 0.0f;
+float deltaTime = 0.0f;		//time between current and last frame
 float lastFrame = 0.0f;
+
+/*
+mouse routine
+*/
+bool first = true;
+int mouseX = 0;
+int mouseY = 0;
+float pitch = 0.0f;		//pitch value in euler angles system
+float yaw = 0.0f;		//yaw value in euler angles system
 
 VECTOR3D raytrace(Ray ray, int depth)
 {
@@ -315,18 +324,10 @@ void arrowkey(int key, int x, int y)
 	glutPostRedisplay();
 }
 
-void mouse(int button, int state, int x, int y)
-{
-
-}
-
-void mousePassive(int x, int y)
-{
-
-}
-
 void mouseActive(int x, int y)
 {
+	mouseX = x;
+	mouseY = y;
 
 }
 
@@ -404,8 +405,6 @@ int main(int argc, char **argv)
 	/*
 	mouse routine
 	*/
-	glutMouseFunc(mouse);
-	glutPassiveMotionFunc(mousePassive);
 	glutMotionFunc(mouseActive);
 
 	glutMainLoop();
