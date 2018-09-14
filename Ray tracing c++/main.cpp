@@ -33,7 +33,7 @@ GLdouble projMatrix[16];
 GLint viewport[4];
 
 vector<Object*> objects;		//obejets
-VECTOR3D light = VECTOR3D(0.0f, 10.0f, -8.0f);		//position of the light
+VECTOR3D light = VECTOR3D(0.0f, 10.0f, 8.0f);		//position of the light
 Camera canon;		//Camera
 
 vector<Object*> Buffer;		//buffer objects
@@ -116,7 +116,7 @@ VECTOR3D raytrace(Ray ray, int depth)
 	if (depth > 0)
 		return o->k_ambient + (o->getColor(point, light, ray.origin)) * shadow
 			+ raytrace(Ray(point, Reflection), depth - 1) * 0.3f
-			+ raytrace(Ray(point, ray.dir), depth - 1) * 0.1f;
+			+ raytrace(Ray(point, ray.dir), depth - 1) * 0.0f;
 		
 	else
 		return o->k_ambient + o->getColor(point, light, ray.origin) * shadow;
