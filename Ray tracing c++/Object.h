@@ -16,9 +16,9 @@ public:
 	VECTOR3D k_ambient;
 	VECTOR3D k_diffuse;
 	VECTOR3D k_specular;
-	float k_shineness;
-	float f_reflection;
-	float f_refraction;
+	float k_shineness = 32.0f;
+	float f_reflection = 0.3f;
+	float f_refraction = 0.3f;
 	/*
 	constructor
 	*/
@@ -78,8 +78,24 @@ public:
 	virtual void setDiffuse(VECTOR3D v) { k_diffuse = v; }
 	virtual void setSpecular(VECTOR3D v) { k_specular = v; }
 	virtual void setShineness(float value) { k_shineness = value; }
-	virtual void setReflectionFactor(float value) { f_reflection = value; }
-	virtual void setRefractionFactor(float value) { f_refraction = value; }
+	virtual void setReflectionFactor(float value) 
+	{ 
+		if ((int)value >= 1)
+		{
+			f_reflection = 1.0f;
+			return;
+		}
+		f_reflection = value; 
+	}
+	virtual void setRefractionFactor(float value) 
+	{
+		if ((int)value >= 1)
+		{
+			f_refraction = 1.0f;
+			return;
+		}
+		f_refraction = value; 
+	}
 
 	/*
 	getter
