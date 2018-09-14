@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <vector>
+#include <ctime>
 #include "my_utility.h"
 #include "Sphere.h"
 #include "Plane.h"
@@ -34,14 +35,15 @@ GLint viewport[4];
 
 vector<Object*> objects;		//obejets
 VECTOR3D light = VECTOR3D(00.0f, 10.0f, 10.0f);		//position of the light
-Camera canon = Camera(0.0, 10.0, 10.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0);		//Camera
+Camera canon = Camera(0.0, 10.0, 10.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 2.0f);		//Camera
 
 vector<Object*> Buffer;		//buffer objects
 VECTOR3D lightBuffer;
 
 const VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//origin of the ray in world space
-float deltaTime = 0.0f;		//time between current and last frame
-float lastFrame = 0.0f;		//time of last frame
+
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
 
 VECTOR3D raytrace(Ray ray, int depth)
 {
@@ -164,11 +166,14 @@ void myLookAt(Camera camera)
 }
 
 void display(void)
-{
-	int currentFrame = glutGet(GLUT_ELAPSED_TIME);
+{ 
+	/*
+	calculate frame interval time
+	*/
+	float currentFrame = clock();
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
-	printf("%d\n", currentFrame);
+
 	/*
 	clear buffer
 	*/
@@ -267,7 +272,8 @@ void reshape(int w, int h)
 
 void key(unsigned char key, int x, int y)
 {
-	float cameraSpeed = canon.speed * deltaTime;
+	float _deltatime = deltaTime / CLOCKS_PER_SEC;
+	float cameraSpeed = canon.speed * _deltatime;
 
 	switch (key)
 	{
@@ -291,6 +297,7 @@ void key(unsigned char key, int x, int y)
 		break;
 	}
 	printVector(canon.pos);
+	printf("%lf\n", cameraSpeed);
 	glutPostRedisplay();
 }
 
@@ -369,8 +376,6 @@ int main(int argc, char **argv)
 	*/
 	
 	
-
-
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);
 	glutKeyboardFunc(key);
