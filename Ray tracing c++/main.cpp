@@ -34,7 +34,7 @@ GLdouble projMatrix[16];
 GLint viewport[4];
 
 vector<Object*> objects;		//obejets
-VECTOR3D light = VECTOR3D(0.0f, 10.0f, 0.0f);		//position of the light
+VECTOR3D light = VECTOR3D(0.0f, 8.0f, 0.0f);		//position of the light
 Camera canon = Camera(0.0, 10.0, 10.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 1.0f);		//Camera
 
 vector<Object*> Buffer;		//buffer objects
@@ -330,9 +330,9 @@ int main(int argc, char **argv)
 	**********************/
 	vector<VECTOR3D> center;
 	center.resize(3);
-	center[0] = VECTOR3D(2.0, 2.0, 2.0);
-	center[1] = VECTOR3D(-2.0, 2.0, 2.0);
-	center[2] = VECTOR3D(0.0, 2.0, -2.0);
+	center[0] = VECTOR3D(5.0, 2.0, 5.0);
+	center[1] = VECTOR3D(-5.0, 2.0, 5.0);
+	center[2] = VECTOR3D(0.0, 2.0, -5.0);
 	/*
 	create three balls.
 	*/
@@ -344,7 +344,7 @@ int main(int argc, char **argv)
 		objects[objects.size() - 1]->setDiffuse(randomVector());
 		objects[objects.size() - 1]->setSpecular(randomVector());
 		objects[objects.size() - 1]->setShineness(32.0);
-		objects[objects.size() - 1]->setReflectionFactor(0.8f);
+		objects[objects.size() - 1]->setReflectionFactor(0.5f);
 		objects[objects.size() - 1]->setRefractionFactor(0.0f);
 		index++;
 
@@ -368,15 +368,19 @@ int main(int argc, char **argv)
 
 	/*
 	create a polygon
-	temp = VECTOR3D(2.0, 2.0, 2.0);
+	*/
+	temp = VECTOR3D(2.0, -1.9, 2.0);
+	VECTOR3D non(1.0f,0.0f,0.0f);
 	for (int i = 0; i < 3; i++)
 	center[i] += temp;
 	objects.push_back(new Polygon(center[0], center[1], center[2]));
-	objects[objects.size() - 1]->setAmbient(temp);
-	objects[objects.size() - 1]->setDiffuse(temp);
-	objects[objects.size() - 1]->setSpecular(temp);
+	objects[objects.size() - 1]->setAmbient(non);
+	objects[objects.size() - 1]->setDiffuse(non);
+	objects[objects.size() - 1]->setSpecular(non);
 	objects[objects.size() - 1]->setShineness(1.0);
-	*/
+	objects[objects.size() - 1]->setReflectionFactor(0.5f);
+	objects[objects.size() - 1]->setRefractionFactor(0.0f);
+	
 	
 	
 	glutReshapeFunc(reshape);
