@@ -19,8 +19,8 @@ public:
 	constructor
 	*/
 	Camera() : pos(0.0f, 0.0f, 0.0f), dir(0.0f, 0.0f, -1.0f), up(0.0f, 1.0f, 0.0f), right(1.0f, 0.0f, 0.0f), speed(2.0f) { }
-	Camera(float px, float py, float pz, float dx, float dy, float dz, float ux, float uy, float uz) :
-		pos(px, py, pz), dir(dx, dy, dz), up(ux, uy, uz)
+	Camera(float px, float py, float pz, float dx, float dy, float dz, float ux, float uy, float uz, float speed) :
+		pos(px, py, pz), dir(dx, dy, dz), up(ux, uy, uz), speed(speed)
 	{
 		right = dir.CrossProduct(up);
 	}
