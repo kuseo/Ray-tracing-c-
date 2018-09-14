@@ -320,6 +320,16 @@ void mouse(int button, int state, int x, int y)
 
 }
 
+void mousePassive(int x, int y)
+{
+
+}
+
+void mouseActive(int x, int y)
+{
+
+}
+
 int main(int argc, char **argv)
 {
 	printf("depth : ");
@@ -390,7 +400,14 @@ int main(int argc, char **argv)
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(key);
 	glutSpecialFunc(arrowkey);
+	
+	/*
+	mouse routine
+	*/
 	glutMouseFunc(mouse);
+	glutPassiveMotionFunc(mousePassive);
+	glutMotionFunc(mouseActive);
+
 	glutMainLoop();
 	return 0;             /* ANSI C requires main to return int. */
 }
