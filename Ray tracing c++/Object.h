@@ -78,7 +78,7 @@ public:
 	virtual void setDiffuse(VECTOR3D v) { k_diffuse = v; }
 	virtual void setSpecular(VECTOR3D v) { k_specular = v; }
 	virtual void setShineness(float value) { k_shineness = value; }
-	virtual void setReflactionFactor(float value) { f_reflection = value; }
+	virtual void setReflectionFactor(float value) { f_reflection = value; }
 	virtual void setRefractionFactor(float value) { f_refraction = value; }
 
 	/*
