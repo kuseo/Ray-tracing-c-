@@ -35,7 +35,7 @@ GLint viewport[4];
 
 vector<Object*> objects;		//obejets
 VECTOR3D light = VECTOR3D(0.0f, 8.0f, 0.0f);		//position of the light
-Camera canon = Camera(0.0, 5.0, 15.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0, 1.0f);		//Camera
+Camera canon;		//create default Camera
 
 vector<Object*> Buffer;		//buffer objects
 VECTOR3D lightBuffer;
@@ -141,12 +141,12 @@ void myLookAt(Camera camera)
 	*/
 	camera.right.Normalize();
 	camera.up.Normalize();
-	camera.dir.Normalize();
+	camera.front.Normalize();
 	float RUD[16] =
 	{
 		camera.right.x, camera.right.y, camera.right.z, 0.0f,
 		camera.up.x, camera.up.y, camera.up.z, 0.0f,
-		camera.dir.x, camera.dir.y, camera.dir.z, 0.0f,
+		camera.front.x, camera.front.y, camera.front.z, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	};
 
@@ -280,8 +280,7 @@ void reshape(int w, int h)
 
 void key(unsigned char key, int x, int y)
 {
-	float _deltatime = deltaTime / CLOCKS_PER_SEC;
-	float cameraSpeed = canon.speed * _deltatime;
+	float _deltaTime = deltaTime / CLOCKS_PER_SEC;
 
 	switch (key)
 	{
@@ -289,19 +288,19 @@ void key(unsigned char key, int x, int y)
 		exit(0); //terminate program with ESC key
 	case 'w':
 	case 'W':
-		canon.pos += canon.dir * cameraSpeed;
+		canon.moveAround(FORWARD, _deltaTime);
 		break;
 	case 'a':
 	case 'A':
-		canon.pos += canon.right * -cameraSpeed;
+		canon.moveAround(LEFT, _deltaTime);
 		break;
 	case 's':
 	case 'S':
-		canon.pos += canon.dir * -cameraSpeed;
+		canon.moveAround(BACKWARD, _deltaTime);
 		break;
 	case 'd':
 	case 'D':
-		canon.pos += canon.right * cameraSpeed;
+		canon.moveAround(RIGHT, _deltaTime);
 		break;
 	}
 
@@ -330,6 +329,7 @@ void mouseActive(int x, int y)
 	{
 		lastX = x;
 		lastY = y;
+		first = false;
 	}
 
 	float offsetX = x - lastX;
@@ -337,24 +337,7 @@ void mouseActive(int x, int y)
 	lastX = x;
 	lastY = y;
 
-	float sensitivity = 0.05f;
-	offsetX *= sensitivity;
-	offsetY *= sensitivity;
-
-	yaw += offsetX;
-	pitch += offsetY;
-
-	if ((int)pitch >= 90)
-		pitch = 89.0f;
-	if ((int)pitch <= -90)
-		pitch = -89.0f;
-
-	VECTOR3D _dir;
-	_dir.x = cos(radian(yaw)) * cos(radian(pitch));
-	_dir.y = sin(radian(pitch));
-	_dir.z = sin(radian(yaw)) * cos(radian(pitch));
-	_dir.Normalize();
-	canon.dir = _dir;
+	canon.lookAround(offsetX, offsetY, true);
 
 	glutPostRedisplay();
 }
