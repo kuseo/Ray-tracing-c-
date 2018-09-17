@@ -5,8 +5,6 @@
 #include "VECTOR3D.h"
 #include "Matrix.h"
 
-#define radian(degree) ((degree)*(3.141592)/180.0f)
-
 VECTOR3D randomVector()
 {
 	VECTOR3D output;

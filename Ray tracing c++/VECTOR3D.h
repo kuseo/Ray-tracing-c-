@@ -2,6 +2,7 @@
 #define __VECTOR3D_H__
 
 #include <cmath>
+#define radian(degree) ((degree)*(3.141592)/180.0f)
 
 class VECTOR3D
 {
