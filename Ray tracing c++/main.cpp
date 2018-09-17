@@ -35,7 +35,7 @@ GLint viewport[4];
 
 vector<Object*> objects;		//obejets
 VECTOR3D light = VECTOR3D(0.0f, 8.0f, 0.0f);		//position of the light
-Camera canon = Camera(0.0, 10.0, 10.0, 0.0, -1.0, -1.0, 0.0, 1.0, -1.0, 1.0f);		//Camera
+Camera canon = Camera(0.0, 5.0, 15.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0, 1.0f);		//Camera
 
 vector<Object*> Buffer;		//buffer objects
 VECTOR3D lightBuffer;
@@ -49,8 +49,8 @@ float lastFrame = 0.0f;
 mouse routine
 */
 bool first = true;
-int mouseX = 0;
-int mouseY = 0;
+int lastX = 0;
+int lastY = 0;
 float pitch = 0.0f;		//pitch value in euler angles system
 float yaw = 0.0f;		//yaw value in euler angles system
 
@@ -326,9 +326,37 @@ void arrowkey(int key, int x, int y)
 
 void mouseActive(int x, int y)
 {
-	mouseX = x;
-	mouseY = y;
+	if (first)
+	{
+		lastX = x;
+		lastY = y;
+	}
 
+	float offsetX = x - lastX;
+	float offsetY = y - lastY;
+	lastX = x;
+	lastY = y;
+
+	float sensitivity = 0.05f;
+	offsetX *= sensitivity;
+	offsetY *= sensitivity;
+
+	yaw += offsetX;
+	pitch += offsetY;
+
+	if ((int)pitch >= 90)
+		pitch = 89.0f;
+	if ((int)pitch <= -90)
+		pitch = -89.0f;
+
+	VECTOR3D _dir;
+	_dir.x = cos(radian(yaw)) * cos(radian(pitch));
+	_dir.y = sin(radian(pitch));
+	_dir.z = sin(radian(yaw)) * cos(radian(pitch));
+	_dir.Normalize();
+	canon.dir = _dir;
+
+	glutPostRedisplay();
 }
 
 int main(int argc, char **argv)
@@ -336,7 +364,7 @@ int main(int argc, char **argv)
 	printf("depth : ");
 	scanf("%d", &depth);
 
-	srand(90);
+	srand(91);
 	
 	Initialize(argc, argv);
 	
