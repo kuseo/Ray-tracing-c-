@@ -323,6 +323,12 @@ void arrowkey(int key, int x, int y)
 	glutPostRedisplay();
 }
 
+void mouse(int button, int state, int x, int y)
+{
+	if (state == GLUT_UP)
+		first = true;
+}
+
 void mouseActive(int x, int y)
 {
 	if (first)
@@ -416,6 +422,7 @@ int main(int argc, char **argv)
 	/*
 	mouse routine
 	*/
+	glutMouseFunc(mouse);
 	glutMotionFunc(mouseActive);
 
 	glutMainLoop();
