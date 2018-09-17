@@ -38,14 +38,16 @@ public:
 	*/
 	Camera() :
 		pos(0.0f, 0.0f, 0.0f), up(0.0f, 1.0f, 0.0f), front(0.0f, 0.0f, -1.0f),
-		yaw(YAW), pitch(PITCH)
+		yaw(YAW), pitch(PITCH),
+		speed(SPEED), sensitivity(SENSITIVITY)
 	{
 		this->worldup = up;
 		updateCameraVectors();
 	}
-	Camera(VECTOR3D pos,VECTOR3D up, float yaw, float pitch) :
-		front(0.0f, 0.0f, -1.0f), 
-		speed(SPEED), sensitivity(SENSITIVITY)
+	Camera(VECTOR3D pos,VECTOR3D up, 
+		float yaw, float pitch,
+		float speed, float sensitivity) :
+		speed(speed), sensitivity(sensitivity)
 	{
 		this->pos = pos;
 		this->worldup = up;
@@ -62,6 +64,36 @@ public:
 	/*
 	member function
 	*/
+	void moveAround(Camera_Movement direction, float deltaTime)
+	{
+		float velocity = speed * deltaTime;
+		if (direction == FORWARD)
+			this->pos += front * velocity;
+		if (direction == BACKWARD)
+			this->pos += front * -velocity;
+		if (direction == LEFT)
+			this->pos += right * -velocity;
+		if (direction == RIGHT)
+			this->pos += right * velocity;
+	}
+
+	void lookAround(int offsetX, int offsetY, bool constrainPitch)
+	{
+		offsetX *= this->sensitivity;
+		offsetY *= this->sensitivity;
+
+		yaw += offsetX;
+		pitch += offsetY;
+		if (constrainPitch)
+		{
+			if ((int)pitch >= 90)
+				pitch = 89.0f;
+			if ((int)pitch <= -90)
+				pitch = -89.0f;
+		}
+		updateCameraVectors();
+	}
+
 	void updateCameraVectors()
 	{
 		VECTOR3D front;
