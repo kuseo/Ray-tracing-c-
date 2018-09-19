@@ -253,6 +253,7 @@ void display(void)
 			glColor3f(color.x, color.y, color.z);
 			glVertex3f(near.x, near.y, near.z);
 		}
+	glEnd();
 
 	glutSwapBuffers();
 	glutPostRedisplay();
