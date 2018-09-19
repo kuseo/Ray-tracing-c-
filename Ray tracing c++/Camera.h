@@ -44,6 +44,7 @@ public:
 		this->worldup = up;
 		updateCameraVectors();
 	}
+
 	Camera(VECTOR3D pos,VECTOR3D up, 
 		float yaw, float pitch,
 		float speed, float sensitivity) :
@@ -83,7 +84,7 @@ public:
 		offsetY *= this->sensitivity;
 
 		yaw += offsetX;
-		pitch += offsetY;
+		pitch -= offsetY;
 		if (constrainPitch)
 		{
 			if ((int)pitch >= 90)
@@ -101,10 +102,20 @@ public:
 		front.y = sin(radian(pitch));
 		front.z = sin(radian(yaw)) * cos(radian(pitch));
 		front.Normalize();
+		this->front = front;
 		right = front.CrossProduct(worldup);
 		right.Normalize();
 		up = right.CrossProduct(front);
 		up.Normalize();
+	}
+
+	/*
+	for dev
+	*/
+	void printCameraValues()
+	{
+		printf("pos : (%lf, %lf, %lf)\n", pos.x, pos.y, pos.z);
+
 	}
 
 	/*
