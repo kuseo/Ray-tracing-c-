@@ -35,7 +35,8 @@ GLint viewport[4];
 
 vector<Object*> objects;		//obejets
 VECTOR3D light = VECTOR3D(0.0f, 8.0f, 0.0f);		//position of the light
-Camera canon;		//create default Camera
+Camera canon = Camera(VECTOR3D(0.0f, 15.0f, 15.0f), VECTOR3D(0.0f, 1.0f, 0.0f), YAW, PITCH-45, SPEED, SENSITIVITY);		//create default Camera
+//Camera canon;
 
 vector<Object*> Buffer;		//buffer objects
 VECTOR3D lightBuffer;
@@ -353,7 +354,7 @@ int main(int argc, char **argv)
 	printf("depth : ");
 	scanf("%d", &depth);
 
-	srand(91);
+	srand(73);
 	
 	Initialize(argc, argv);
 	
