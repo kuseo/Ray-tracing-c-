@@ -11,7 +11,10 @@
 
 #include <stdio.h>
 #include <vector>
+#include <map>
 #include <ctime>
+#include <string>
+
 #include "my_utility.h"
 #include "Sphere.h"
 #include "Plane.h"
@@ -25,6 +28,8 @@
 using namespace std;
 
 int depth = 0;
+int fps = 0;
+char str[10] = "FPS : ";
 
 /*
 openGL view matrix
@@ -34,9 +39,8 @@ GLdouble projMatrix[16];
 GLint viewport[4];
 
 vector<Object*> objects;		//obejets
-VECTOR3D light = VECTOR3D(0.0f, 8.0f, 0.0f);		//position of the light
-Camera canon = Camera(VECTOR3D(0.0f, 15.0f, 15.0f), VECTOR3D(0.0f, 1.0f, 0.0f), YAW, PITCH-45, SPEED, SENSITIVITY);		//create default Camera
-//Camera canon;
+VECTOR3D light = VECTOR3D(0.0f, 5.0f, 0.0f);		//position of the light
+Camera canon = Camera(VECTOR3D(0.0f, 15.0f, 15.0f), VECTOR3D(0.0f, 1.0f, 0.0f), YAW, PITCH-45, 3, SENSITIVITY);		//create default Camera
 
 vector<Object*> Buffer;		//buffer objects
 VECTOR3D lightBuffer;
@@ -44,6 +48,7 @@ VECTOR3D lightBuffer;
 const VECTOR3D eye = VECTOR3D(0.0f, 0.0f, 0.0f);			//origin of the ray in world space
 
 float deltaTime = 0.0f;		//time between current and last frame
+float lastTime = 0.0f;
 float lastFrame = 0.0f;
 
 /*
@@ -54,6 +59,8 @@ int lastX = 0;
 int lastY = 0;
 float pitch = 0.0f;		//pitch value in euler angles system
 float yaw = 0.0f;		//yaw value in euler angles system
+
+map<int, bool> keys;
 
 VECTOR3D raytrace(Ray ray, int depth)
 {
@@ -94,7 +101,7 @@ VECTOR3D raytrace(Ray ray, int depth)
 	VECTOR3D point = ray.position(min_t);
 
 	/* light vector */
-	VECTOR3D L = light - point;
+	VECTOR3D L = lightBuffer - point;
 	L.Normalize();
 
 	Ray shadow_ray(point, L);
@@ -126,12 +133,12 @@ VECTOR3D raytrace(Ray ray, int depth)
 	VECTOR3D Reflection = (L * -1.0f) + N * 2.0f * ((L.InnerProduct(N)));
 	
 	if (depth > 0)
-		return o->k_ambient + (o->getColor(point, light, ray.origin)) * shadow
+		return o->k_ambient + (o->getColor(point, lightBuffer, ray.origin)) * shadow
 		+ raytrace(Ray(point, Reflection), depth - 1) * (o->f_reflection)
 		+ raytrace(Ray(point, ray.dir), depth - 1) * (o->f_refraction);
 		
 	else
-		return o->k_ambient + o->getColor(point, light, ray.origin) * shadow;
+		return o->k_ambient + o->getColor(point, lightBuffer, ray.origin) * shadow;
 }
 
 void myLookAt(Camera camera)
@@ -170,13 +177,36 @@ void myLookAt(Camera camera)
 	for (int i = 0; i < Buffer.size(); i++)
 		Buffer[i]->matrixMult(LookAt);
 
-	Matrix m_light = VectorToMatrix(lightBuffer, 0.0f);
+	Matrix m_light = VectorToMatrix(lightBuffer, 1.0f);
 	m_light = LookAt * m_light;
 	lightBuffer = MatrixToVector(m_light);
 }
 
+void update()
+{
+	float _deltaTime = deltaTime / CLOCKS_PER_SEC;
+
+	if (keys['w'] || keys['W']) { canon.moveAround(FORWARD, _deltaTime); }
+	if (keys['a'] || keys['A']) { canon.moveAround(LEFT, _deltaTime); }
+	if (keys['s'] || keys['S']) { canon.moveAround(BACKWARD, _deltaTime); }
+	if (keys['d'] || keys['D']) { canon.moveAround(RIGHT, _deltaTime); }
+
+}
+
+void renderBitmapCharacher(float x, float y, float z, void *font, const char *string)
+{
+
+	const char *c;
+	glRasterPos3f(x, y, z);
+	for (c = string; *c != '\0'; c++) {
+		glutBitmapCharacter(font, *c);
+	}
+}
+
 void display(void)
 { 
+	fps++;
+
 	/*
 	calculate frame interval time
 	*/
@@ -217,9 +247,11 @@ void display(void)
 	/*
 	draw
 	*/
+	update(); //smooth keyboard move
 	myLookAt(canon);
 
 	glClear(GL_COLOR_BUFFER_BIT);
+
 	glBegin(GL_POINTS);
 	for (int i = 0; i < glutGet(GLUT_WINDOW_WIDTH); i++)
 		for (int j = 1; j <= glutGet(GLUT_WINDOW_HEIGHT); j++)
@@ -255,6 +287,22 @@ void display(void)
 		}
 	glEnd();
 
+	char temp[5] = { 0, };
+	if (currentFrame - lastTime >= 1000)
+	{
+		itoa(fps, temp, 10);
+
+		fps = 0;
+		lastTime = currentFrame;
+		strcpy(str, "FPS : ");
+		strcat(str, temp);
+	}
+
+	glPushMatrix();
+	glColor3d(1.0, 1.0, 1.0);
+	renderBitmapCharacher(-0.9, 0.9, 0.0, GLUT_BITMAP_8_BY_13, str);
+	glPopMatrix();
+
 	glutSwapBuffers();
 	glutPostRedisplay();
 }
@@ -269,7 +317,9 @@ void reshape(int w, int h)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(-1.0 * wfactor, 1.0 * wfactor, -1.0 * hfactor, 1.0 * hfactor, -1.0, 1.0);
-
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	
 	/*
 	get matrices
 	*/
@@ -280,48 +330,15 @@ void reshape(int w, int h)
 	glutPostRedisplay();
 }
 
-void key(unsigned char key, int x, int y)
+void keyboardDown(unsigned char key, int x, int y)
 {
-	float _deltaTime = deltaTime / CLOCKS_PER_SEC;
-
-	switch (key)
-	{
-	case 27:
-		exit(0); //terminate program with ESC key
-	case 'w':
-	case 'W':
-		canon.moveAround(FORWARD, _deltaTime);
-		break;
-	case 'a':
-	case 'A':
-		canon.moveAround(LEFT, _deltaTime);
-		break;
-	case 's':
-	case 'S':
-		canon.moveAround(BACKWARD, _deltaTime);
-		break;
-	case 'd':
-	case 'D':
-		canon.moveAround(RIGHT, _deltaTime);
-		break;
-	}
-
+	keys[key] = true;
 	glutPostRedisplay();
 }
 
-void arrowkey(int key, int x, int y)
+void keyboardUp(unsigned char key, int x, int y)
 {
-	switch (key)
-	{
-	case GLUT_KEY_UP:
-		break;
-	case GLUT_KEY_DOWN:
-		break;
-	case GLUT_KEY_LEFT:
-		break;
-	case GLUT_KEY_RIGHT:
-		break;
-	}
+	keys[key] = false;
 	glutPostRedisplay();
 }
 
@@ -346,8 +363,6 @@ void mouseActive(int x, int y)
 	lastY = y;
 
 	canon.lookAround(offsetX, offsetY, true);
-
-	glutPostRedisplay();
 }
 
 int main(int argc, char **argv)
@@ -385,7 +400,7 @@ int main(int argc, char **argv)
 		if (index == 3)
 			break;
 	}
-
+	
 	/*
 	create infinite plane
 	*/
@@ -403,8 +418,8 @@ int main(int argc, char **argv)
 	/*
 	create a polygon
 	*/
-	temp = VECTOR3D(2.0, -1.9, 2.0);
-	VECTOR3D non(.2f,.0f,.0f);
+	temp = VECTOR3D(0.0, -1.9, 0.0);
+	VECTOR3D non(0.1f,0.1f,0.1f);
 	for (int i = 0; i < 3; i++)
 	center[i] += temp;
 	objects.push_back(new Polygon(center[0], center[1], center[2]));
@@ -418,8 +433,8 @@ int main(int argc, char **argv)
 	
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
-	glutKeyboardFunc(key);
-	glutSpecialFunc(arrowkey);
+	glutKeyboardFunc(keyboardDown);
+	glutKeyboardUpFunc(keyboardUp);
 	
 	/*
 	mouse routine
